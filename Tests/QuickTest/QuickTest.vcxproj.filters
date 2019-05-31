@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Neo">
+      <UniqueIdentifier>{117fa4e9-938b-40f4-97fa-eea34e466df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Neo\Quick">
+      <UniqueIdentifier>{09cf26dc-05dc-4650-be5f-0628e1e07319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Neo\Common">
+      <UniqueIdentifier>{4a2080c3-dc05-468f-bc7a-da0a83bf924d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Neo\Models">
+      <UniqueIdentifier>{fc778c8b-9093-402e-ae1c-bde0af608409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Neo\Gui">
+      <UniqueIdentifier>{20e9188d-561c-4b57-b5cf-5869acf46dcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Neo\Network">
+      <UniqueIdentifier>{97f58729-dc11-4f8c-9142-396cff362156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Neo\3rd">
+      <UniqueIdentifier>{1de74b5e-922c-4fac-8bc0-6aea6f692cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Neo\3rd\utilities">
+      <UniqueIdentifier>{31a33166-799d-4642-861b-c95467e772e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Neo\Helpers">
+      <UniqueIdentifier>{d0a17231-7904-462f-8ca3-fce7ec3413eb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Quick\MovableArea.cpp">
+      <Filter>Neo\Quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\Common.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\Numeric.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Network\Ping.cpp">
+      <Filter>Neo\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\LogHandler.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Models\NeoAbstractTableModel.cpp">
+      <Filter>Neo\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Gui\NeoDoubleValidator.cpp">
+      <Filter>Neo\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Models\NeoModelHelper.cpp">
+      <Filter>Neo\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="TableModelTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Models\NeoTableHeaderItem.cpp">
+      <Filter>Neo\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\3rd\utilities\HttpClient.cpp">
+      <Filter>Neo\3rd\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\3rd\utilities\Json.cpp">
+      <Filter>Neo\3rd\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Helpers\JsonHelper.cpp">
+      <Filter>Neo\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Models\NeoTableHeaderModel.cpp">
+      <Filter>Neo\Models</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="debug\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="release\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="..\..\Src\Common\Common.h">
+      <Filter>Neo\Common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Common\Numeric.h">
+      <Filter>Neo\Common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Quick\MovableArea.h">
+      <Filter>Neo\Quick</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Network\Ping.h">
+      <Filter>Neo\Network</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Common\LogHandler.h">
+      <Filter>Neo\Common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Network\Ping_p.h">
+      <Filter>Neo\Network</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Models\NeoAbstractTableModel.h">
+      <Filter>Neo\Models</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Gui\NeoDoubleValidator.h">
+      <Filter>Neo\Gui</Filter>
+    </QtMoc>
+    <QtMoc Include="TableModelTest.h">
+      <Filter>Source Files</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Models\NeoTableHeaderItem.h">
+      <Filter>Neo\Models</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Models\NeoTableHeaderModel.h">
+      <Filter>Neo\Models</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Src\Models\NeoModelHelper.h">
+      <Filter>Neo\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Common\Noncopyable.h">
+      <Filter>Neo\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ScopeGuard.h">
+      <Filter>Neo\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\3rd\utilities\HttpClient.h">
+      <Filter>Neo\3rd\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\3rd\utilities\Json.h">
+      <Filter>Neo\3rd\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Helpers\JsonHelper.h">
+      <Filter>Neo\Helpers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,1 @@
+Neo is base on Qt5.12

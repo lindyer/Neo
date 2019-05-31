@@ -1,0 +1,19 @@
+﻿#pragma once
+
+/**
+**  This file is a part of Neo
+**  @Creator:       linjianpeng
+**  @Date:          2019-5-22
+**  @Note:
+**  @Brief:
+**/
+
+#include "Quick/MovableArea.h"
+
+#include <QtQml>
+
+using namespace Neo::Quick;
+
+inline void registerNeoQuickType() {
+    qmlRegisterType<MovableArea>("Neo.Quick",1,0,"MovableArea");
+}

@@ -1,0 +1,8 @@
+*.user
+**/.vs
+**/GeneratedFiles
+**/debug
+**/release
+**/x64
+**/86
+**/logs

@@ -1,0 +1,2 @@
+module Neo.Quick
+NeoFontHolder 1.0 ./qml/NeoFontHolder.qml
