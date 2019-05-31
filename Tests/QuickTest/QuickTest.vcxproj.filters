@@ -147,9 +147,6 @@
     <ClInclude Include="..\..\Src\Common\Noncopyable.h">
       <Filter>Neo\Common</Filter>
     </ClInclude>
-    <ClInclude Include="ScopeGuard.h">
-      <Filter>Neo\Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\3rd\utilities\HttpClient.h">
       <Filter>Neo\3rd\utilities</Filter>
     </ClInclude>
