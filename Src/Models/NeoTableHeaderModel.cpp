@@ -7,6 +7,9 @@
 #include "NeoTableHeaderModel.h"
 #include "NeoTableHeaderItem.h"
 #include "NeoModelHelper.h"
+#include <QVariant>
+#include <QQmlListProperty>
+#include <QVector>
 
 class NeoTableHeaderModelPrivate {
 public:
@@ -83,7 +86,7 @@ qreal NeoTableHeaderModel::headerWidth() const {
 void NeoTableHeaderModel::setHeaderWidth(qreal headerWidth) {
 	Q_D(NeoTableHeaderModel);
 	if(headerWidth == d->headerWidth) {
-		return; 
+		return;
 	}
 	d->headerWidth = headerWidth;
 	emit headerWidthChanged(headerWidth);
@@ -156,4 +159,12 @@ void NeoTableHeaderModel::setItemWidthAt(int index, qreal width) {
 	auto delta = width - item->itemWidth();
 	item->setItemWidth(width);
 	setHeaderWidth(headerWidth() + delta);
+}
+
+
+void NeoTableHeaderModel::classBegin() {
+}
+
+
+void NeoTableHeaderModel::componentComplete() {
 }

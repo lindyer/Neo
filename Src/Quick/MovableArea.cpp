@@ -17,7 +17,7 @@ struct MovableAreaPrivate {
 
 MovableArea::MovableArea(QQuickItem* parent)
     : QQuickItem(parent),
-      dptr(new MovableAreaPrivate()) {
+      d_ptr(new MovableAreaPrivate()) {
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
 }
 
@@ -27,38 +27,42 @@ MovableArea::~MovableArea() {
 
 
 QObject* MovableArea::target() const {
-    return dptr->target;
+	const Q_D(MovableArea);
+    return d->target;
 }
 
 
 void MovableArea::setTarget(QObject* target) {
-    if (target == dptr->target) {
+	Q_D(MovableArea);
+    if (target == d->target) {
         return;
     }
-    dptr->target = target;
+    d->target = target;
     emit targetChanged(target);
 
-    dptr->item = qobject_cast<QQuickItem*>(dptr->target);
-    if (dptr->item) {
+    d->item = qobject_cast<QQuickItem*>(d->target);
+    if (d->item) {
         return;
     }
-    dptr->window = qobject_cast<QQuickWindow*>(dptr->target);
-    if (dptr->window) {
+    d->window = qobject_cast<QQuickWindow*>(d->target);
+    if (d->window) {
         return;
     }
 }
 
 
 bool MovableArea::hoverEnable() const {
-	return dptr->hoverEnable;
+	const Q_D(MovableArea);
+	return d->hoverEnable;
 }
 
 
 void MovableArea::setHoverEnable(bool enable) {
-	if(dptr->hoverEnable == enable) {
+	Q_D(MovableArea);
+	if(d->hoverEnable == enable) {
 		return;
 	}
-	dptr->hoverEnable = enable;
+	d->hoverEnable = enable;
 	emit hoverEnableChanged(enable);
 	setAcceptHoverEvents(enable);
 }
@@ -66,36 +70,40 @@ void MovableArea::setHoverEnable(bool enable) {
 
 int MovableArea::cursorShape() const
 {
-    return dptr->cursorShape;
+	const Q_D(MovableArea);
+    return d->cursorShape;
 }
 
 void MovableArea::setCursorShape(int cursorShape)
 {
-	if(dptr->cursorShape == cursorShape) {
+	Q_D(MovableArea);
+	if(d->cursorShape == cursorShape) {
 		return;
 	}
-	dptr->cursorShape = Qt::CursorShape(cursorShape);
+	d->cursorShape = Qt::CursorShape(cursorShape);
 	emit cursorShapeChanged(cursorShape);
 }
 
 
 void MovableArea::mousePressEvent(QMouseEvent*) {
-    dptr->cursorPos = QCursor::pos();
+	Q_D(MovableArea);
+    d->cursorPos = QCursor::pos();
 }
 
 
 void MovableArea::mouseMoveEvent(QMouseEvent*) {
+	Q_D(MovableArea);
     auto cursorPos = QCursor::pos();
-    auto deltaX = cursorPos.x() - dptr->cursorPos.x();
-    auto deltaY = cursorPos.y() - dptr->cursorPos.y();
-    if(dptr->item) {
-        dptr->item->setX(dptr->item->x() + deltaX);
-        dptr->item->setY(dptr->item->y() + deltaY);
-    } else if(dptr->window) {
-        dptr->window->setX(dptr->window->x() + deltaX);
-        dptr->window->setY(dptr->window->y() + deltaY);
+    auto deltaX = cursorPos.x() - d->cursorPos.x();
+    auto deltaY = cursorPos.y() - d->cursorPos.y();
+    if(d->item) {
+        d->item->setX(d->item->x() + deltaX);
+        d->item->setY(d->item->y() + deltaY);
+    } else if(d->window) {
+        d->window->setX(d->window->x() + deltaX);
+        d->window->setY(d->window->y() + deltaY);
     }
-    dptr->cursorPos = cursorPos;
+    d->cursorPos = cursorPos;
     emit positionChanged(cursorPos,deltaX,deltaY);
 }
 
@@ -106,7 +114,8 @@ void MovableArea::mouseDoubleClickEvent(QMouseEvent*) {
 
 
 void MovableArea::hoverEnterEvent(QHoverEvent *) {
-    setCursor(dptr->cursorShape);
+	Q_D(MovableArea);
+    setCursor(d->cursorShape);
 }
 
 } //Quick

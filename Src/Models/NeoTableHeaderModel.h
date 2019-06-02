@@ -10,13 +10,13 @@
 
 #include <QAbstractListModel>
 #include <QQmlListProperty>
-
+#include <QQmlParserStatus>
 class NeoTableHeaderModelPrivate;
 
-class NeoTableHeaderModel : public QAbstractListModel
+class NeoTableHeaderModel : public QAbstractListModel, public QQmlParserStatus
 {
 	Q_OBJECT
-
+	Q_INTERFACES(QQmlParserStatus)
 	Q_PROPERTY(qreal headerWidth READ headerWidth WRITE setHeaderWidth NOTIFY headerWidthChanged)
 	Q_PROPERTY(QQmlListProperty<NeoTableHeaderItem> headerItems READ headerItems NOTIFY headerItemsChanged)
 
@@ -51,9 +51,14 @@ public slots:
 	void setItemWidthAt(int index, qreal width);
 
 signals:
-	void headerWidthChanged(qreal headerWidth);
+	void headerWidthChanged(qreal headerWidth); 
 	void headerItemsChanged();
 
+public:
+	void classBegin() override;
+	void componentComplete() override;
+
+private:
 private:
 	Q_DECLARE_PRIVATE(NeoTableHeaderModel)
 	NeoTableHeaderModelPrivate* const d_ptr = nullptr;

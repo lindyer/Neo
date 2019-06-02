@@ -17,8 +17,8 @@ Item {
     DropShadow {
         id: dropShadow
         anchors.fill: contentLoader
-        samples: 60
-        color: "#aa000000"
+        samples: 20
+        color: "#66000000"
         source: contentLoader
     }
 }

@@ -3,16 +3,16 @@
 
 struct NeoTableHeaderItemPrivate {
 	QString title;
-	QString subTitle;
 	qreal itemWidth = 80;
 	bool sortable = false;
 	QString toolTip;
 	qreal titleFontSize = 14;
-	qreal subTitleFontSize = 14;
 	bool visible = true;
 	bool movable = true;
 	bool resizable = true;
 	int minWidth = 40;
+	int titleHorizontalAlignment = Qt::AlignCenter;
+	QVariant extraData;
 };
 
 NeoTableHeaderItem::NeoTableHeaderItem(QObject* parent): QObject(parent), d_ptr(new NeoTableHeaderItemPrivate()){
@@ -45,22 +45,6 @@ void NeoTableHeaderItem::setTitle(const QString& title) {
 	}
 	d->title = title;
 	emit titleChanged(title);
-}
-
-
-QString NeoTableHeaderItem::subTitle() const {
-	const Q_D(NeoTableHeaderItem);
-	return d->subTitle;
-}
-
-
-void NeoTableHeaderItem::setSubTitle(const QString& subTitle) {
-	Q_D(NeoTableHeaderItem);
-	if(subTitle == d->subTitle) {
-		return;
-	}
-	d->subTitle = subTitle;
-	emit subTitleChanged(subTitle);
 }
 
 
@@ -128,22 +112,6 @@ void NeoTableHeaderItem::setTitleFontSize(qreal titleFontSize) {
 }
 
 
-qreal NeoTableHeaderItem::subTitleFontSize() const {
-	const Q_D(NeoTableHeaderItem);
-	return d->subTitleFontSize;
-}
-
-
-void NeoTableHeaderItem::setSubTitleFontSize(qreal subTitleFontSize) {
-	Q_D(NeoTableHeaderItem);
-	if(subTitleFontSize == d->subTitleFontSize) {
-		return;
-	}
-	d->subTitleFontSize = subTitleFontSize;
-	emit subTitleFontSizeChanged(subTitleFontSize);
-}
-
-
 bool NeoTableHeaderItem::visible() const {
 	const Q_D(NeoTableHeaderItem);
 	return d->visible;
@@ -205,4 +173,36 @@ void NeoTableHeaderItem::setMinWidth(int minWidth) {
 	}
 	d->minWidth = minWidth;
 	emit minWidthChanged(minWidth);
+}
+
+
+int NeoTableHeaderItem::titleHorizontalAlignment() const {
+	const Q_D(NeoTableHeaderItem);
+	return d->titleHorizontalAlignment;
+}
+
+
+void NeoTableHeaderItem::setTitleHorizontalAlignment(int titleHorizontalAlignment) {
+	Q_D(NeoTableHeaderItem);
+	if(titleHorizontalAlignment == d->titleHorizontalAlignment) {
+		return;
+	}
+	d->titleHorizontalAlignment = titleHorizontalAlignment;
+	emit titleHorizontalAlignmentChanged(titleHorizontalAlignment);
+}
+
+
+QVariant NeoTableHeaderItem::extraData() const {
+	const Q_D(NeoTableHeaderItem);
+	return d->extraData;
+}
+
+
+void NeoTableHeaderItem::setExtraData(const QVariant& extraData) {
+	Q_D(NeoTableHeaderItem);
+	if(extraData == d->extraData) {
+		return;
+	}
+	d->extraData = extraData;
+	emit extraDataChanged(extraData);
 }

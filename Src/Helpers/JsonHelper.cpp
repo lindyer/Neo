@@ -9,8 +9,9 @@
 #include <QFile>
 #include <QDebug>
 
-namespace Neo {
-	void removeJsonComment(QString& content) {
+namespace Neo { 
+
+	void removeJsonComment(QString& content) { 
 #ifndef JSON_FILE_PRINT_OFF
 		qDebug() << content;
 #endif

@@ -6,4 +6,5 @@ DISTFILES += $$PWD/*.qml \
     $$PWD/NeoToolTip.qml \
     $$PWD/NeoButton.qml \
     $$PWD/NeoWaitingHoodle.qml \
-    $$PWD/NeoBusyIndicator.qml
+    $$PWD/NeoBusyIndicator.qml \
+    $$PWD/NeoMovableListItemView.qml

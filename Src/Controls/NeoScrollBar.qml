@@ -39,10 +39,10 @@ ScrollBar {
     orientation: Qt.Vertical
     minimumSize: 0.2
 
-    background: Rectangle {
-        width: control.width
-        height: control.height
-        color: control.color
-        radius: control.radius
-    }
+//    background: Rectangle {
+//        width: control.width
+//        height: control.height
+//        color: control.color
+//        radius: control.radius
+//    }
 }

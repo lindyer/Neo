@@ -3,15 +3,18 @@ import QtQuick.Controls 2.4
 
 import Neo.Quick 1.0
 
+
 Item {
     id: control
 
+    default property alias tableViewChildren: tableView.children
+
     //export alias property
-    property alias model: tableView.model
+    property alias headerModel: headerListView.model // it need two field: Title and Width
+    property alias tableModel: tableView.model
     property alias tableView: tableView
 
     //header properties
-    property var headerList: []  // it need two field: Title and Width
     property color headerSplitColor: "#D8D8D8"
 
     //row properties
@@ -21,48 +24,103 @@ Item {
     property int rowHeight: rh(30)
     property int currentHoverRow: -1
     property int currentSelectRow: -1
+    property alias itemFont: itemFontHolder.font
+
 
     //whole table properties
+    property bool selectEnable: false
     property bool multiSelectMode: false
-    property int contentWidth: 0
+    //    property int contentWidth: 0
     property var selectedRows: []
     property int titleBarHeight: rh(30)
-    property var multiSelectCond: function(row,cellValue) {
-        return selectedRows.indexOf(row) >= 0
+    property var multiSelectCond: function(row,cellValue) { return selectedRows.indexOf(row) >= 0 }
+    /**
+     * tableItemComponentSelector:
+     * property var holder: parent
+     * parent point to delegate loader which hold itemData,itemRow,itemColumn
+     */
+    property var tableItemComponentSelector: function(row,column) {
+        return tableItemDefaultComponent
     }
+
+    /*
+     * headerItemComponentSelector
+     * property var holder: parent
+     * parent point to delegate loader which hold itemData,itemColumn
+     */
+    property var headerItemComponentSelector: function(column,itemData) {
+        return headerItemDefaultComponent
+    }
+
+    property alias tableItemDefaultComponent: tableItemDefaultComponent
+    property alias headerItemDefaultComponent: headerItemDefaultComponent
+
+    //scrollbar
+    property alias horizontalScrollBar: horizontalScrollBar
+    property alias verticalScrollBar: verticalScrollBar
+    property int horizontalScrollBarPolicy: ScrollBar.AsNeeded
+    property int verticalScrollBarPolicy: ScrollBar.AsNeeded
 
     //signals
     signal rowDoubleClicked(int row)
 
-    onHeaderListChanged: {
-        contentWidth = 0
-        for(var i in headerList) {
-            var item = headerList[i]
-            if(!item.hasOwnProperty("Visible")) {
-                item["Visible"] = true
-            } else if(!item["Visible"]) {
-                contentWidth += headerList[i].Width
-            }
-            var headerItemActionObject = _headerItemAction.createObject(null,{text:item["Title"],checked:true})
-            _headerMenu.addAction(headerItemActionObject)
-            headerModel.append(item)
+    function switchSelect(row) {
+        var idx = selectedRows.indexOf(row)
+        if(idx < 0) {
+            selectedRows.push(row)
+        } else {
+            selectedRows.splice(idx,1)
         }
     }
 
     Component {
-        id: _headerItemAction
-        Action {
-            checkable: true
-            onToggled: {
-                print("##",text,source)
+        id: headerItemDefaultComponent
+        Rectangle {
+            id: headerItemDelegate
+            property var holder: parent
+            border { width: 1; color: "#D0D0D0" }
+            color: "#F0F0F0"
+            Text {
+                text: holder.itemData.title
+                width: parent.width
+                leftPadding: 8
+                rightPadding: 8
+                horizontalAlignment: holder.itemData.titleHorizontalAlignment
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: holder.itemData.titleFontSize
+                elide: Text.ElideRight
             }
         }
     }
 
-    NeoMenu {
-        id: _headerMenu
-        title: "显示的列"
+    Component {
+        id: tableItemDefaultComponent
+        Rectangle {
+            property var holder: parent
+            color: holder.selected ? "#EEEEEE" : (currentHoverRow === holder.itemRow ? "#F0F0F0" : "transparent")
+            border {
+                color: "#F0F0F0"
+                width: 1
+            }
+            Text {
+                id: tableItemDefaultText
+                text: holder.itemData
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+                font: itemFont
+            }
+        }
     }
+
+    Text {
+        id: itemFontHolder
+        font {
+            pixelSize: rfs(14)
+        }
+    }
+
 
     ListView {
         id: headerListView
@@ -70,29 +128,19 @@ Item {
         height: titleBarHeight
         orientation: ListView.Horizontal
         contentX: tableView.contentX
-        model: ListModel {
-            id: headerModel
-        }
         interactive: false
         clip: true
+        delegate: Loader {
+            id: headerItemLoader
+            //define properties which can be accessed by loader.item
+            property var itemData: modelData
+            property var itemColumn: index
+            clip: true
 
-        delegate: Rectangle {
-            id: headerItemDelegate
-            width: Visible ? Width : 0
+            width: modelData.visible ? modelData.itemWidth : 1
             height: titleBarHeight
-            color: index % 2 ?  "#FFFFFF": "#F0F0F0"
-            visible: Visible
-            z: index
 
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.RightButton
-                onClicked: {
-                     if(mouse.button === Qt.RightButton) {
-                        _headerMenu.popup()
-                    }
-                }
-            }
+            sourceComponent: headerItemComponentSelector(index,modelData)
 
             Item {
                 width: rw(5)
@@ -100,39 +148,27 @@ Item {
                 anchors {
                     right: parent.right
                 }
-
-                Rectangle {
-                    width: 1
-                    height: parent.height
-                    anchors.right: parent.right
-                    color: "#D8D8D8"
-                }
-
+                //rise and make headerItemMouseArea handle first
+                z: headerItemLoader.item.z + 1
                 MovableArea {
                     id: headerItemMouseArea
+                    enabled: modelData.visible
                     anchors.fill: parent
                     hoverEnable: true
                     cursorShape: Qt.SizeHorCursor
                     onPositionChanged: {
-                        if(Width <= rw(40) && deltaX < 0) {
+                        if(modelData.itemWidth <= modelData.minWidth && deltaX < 0) {
                             return;
                         }
-                        Width += deltaX;
-                        var delta = Width - headerList[index].Width
-                        headerList[index].Width = Width
-                        contentWidth += delta
+                        modelData.itemWidth += deltaX;
+                        headerModel.headerWidth += deltaX
+                        tableView.forceLayout()
+                    }
+                    onDoubleClicked: {
+                        headerModel.setItemWidthAt(index,tableModel.resizeToContents(index,itemFont))
                         tableView.forceLayout()
                     }
                 }
-            }
-
-            Text {
-                text: Title
-                width: parent.width
-                horizontalAlignment: Text.AlignHCenter
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: rfs(12)
-                elide: Text.ElideRight
             }
         }
     }
@@ -141,59 +177,57 @@ Item {
         id: tableView
         contentX: headerListView.contentX
         anchors.fill: parent
-        columnWidthProvider: function columnWidth(column) {
-            return headerList[column].Width;
-        }
-        contentWidth: control.contentWidth
         anchors.topMargin: titleBarHeight
+        rowHeightProvider: function () {
+            return rowHeight
+        }
+
+        columnWidthProvider: function columnWidth(column) {
+            return headerModel.headerItems[column].visible ? headerModel.headerItems[column].itemWidth : 1;
+        }
+        contentWidth: headerModel.headerWidth
         flickableDirection: TableView.VerticalFlick
         clip: true
+        rowSpacing: -1
+        columnSpacing: -1
+
         ScrollBar.horizontal: NeoScrollBar {
-            policy: ScrollBar.AlwaysOn
+            id: horizontalScrollBar
             orientation: Qt.Horizontal
             parent: tableView.parent
+            policy: horizontalScrollBar.width < tableView.contentWidth ? ScrollBar.AlwaysOn : horizontalScrollBarPolicy
             anchors {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
-                bottomMargin: rw(-14)
+                bottomMargin: rw(-12)
             }
         }
+
         ScrollBar.vertical: NeoScrollBar {
-            policy: ScrollBar.AlwaysOn
+            id: verticalScrollBar
+            policy: verticalScrollBar.height < tableView.contentHeight ? ScrollBar.AlwaysOn : verticalScrollBarPolicy
             parent: tableView.parent
             anchors {
                 top: tableView.top
                 bottom: tableView.bottom
                 right: tableView.right
-                rightMargin: rw(-14)
+                rightMargin: rw(-12)
             }
         }
 
-        delegate: Rectangle {
-            implicitHeight: rowHeight
-            color: {
+        delegate: Loader {
+            id: tableItemLoader
+            property var itemData: modelData
+            property var itemRow: row
+            property var itemColumn: column
+
+            property bool selected: {
                 if(multiSelectMode) {
-                    return multiSelectCond(row,Role) ? selectColor : currentHoverRow == row ? hoverColor : normalColor
+                    return multiSelectCond(row,modelData)
                 } else {
-                    return currentSelectRow == row ? selectColor : currentHoverRow == row ? hoverColor : normalColor
+                    return currentSelectRow === row
                 }
-            }
-            Text  {
-                text: Role
-                anchors.centerIn: parent
-            }
-            Rectangle {
-                width: parent.width
-                anchors.bottom: parent.bottom
-                height: 1
-                color: "#F0F0F0"
-            }
-            Rectangle {
-                anchors.right: parent.right
-                width: 1
-                height: parent.height
-                color: "#F0F0F0"
             }
 
             MouseArea {
@@ -207,10 +241,25 @@ Item {
                         currentHoverRow = -1
                     }
                 }
-                onDoubleClicked: control.rowDoubleClicked(row)
+                onClicked: {
+                    if(!selectEnable) {
+                        return
+                    }
+                    if(multiSelectMode) {
+                        switchSelect(row)
+                    } else {
+                        currentSelectRow = row
+                    }
+                    mouse.accepted = false
+                }
+
+                onDoubleClicked: {
+                    control.rowDoubleClicked(row)
+                    mouse.accepted = false
+                }
             }
+            sourceComponent: tableItemComponentSelector(row,column)
         }
     }
-
 }
 

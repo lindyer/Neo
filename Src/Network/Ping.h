@@ -12,31 +12,41 @@
 #include <functional>
 
 #include <QDebug>
+#include <QQmlParserStatus>
+
 
 namespace Neo {
 
 	namespace Net {
 
 		/*
-		 Neo::Net::Ping ping("220.181.38.149");
-		qDebug() << ping.isReady(); 
-		QObject::connect(&ping, &Neo::Net::Ping::errorNotify, [](Neo::Net::Ping::Error err,int errCode) {
-			qDebug() << err << errCode;
-		});
-		QObject::connect(&ping, &Neo::Net::Ping::networkTrafficNotify, [](Neo::Net::Ping::NetworkTraffic nt, int delayMs) {
-			qDebug() << nt << delayMs;
-		});
-		ping.start();
+		QML qmlRegisterType<Neo::Net::Ping>("Neo.Net", 1, 0, "NeoPing");			NeoPing {
+				host: "taobao.com"
+				interval: 1000
+				running: true
+				onNetworkTrafficNotify: {
+					print("taobao",nt,delayMs)
+				}
+			}
+		 C++
+			Neo::Net::Ping ping("220.181.38.149");
+			QObject::connect(&ping, &Neo::Net::Ping::networkTrafficNotify, [](Neo::Net::Ping::NetworkTraffic nt, int delayMs) {
+				qDebug() << nt << delayMs;
+			});
 		 */
 		class PingPrivate; 
-		class Ping final: public QObject
+		class Ping : public QObject,public QQmlParserStatus
 		{
 			Q_OBJECT
-			Q_DECLARE_PRIVATE(Ping)
+			Q_INTERFACES(QQmlParserStatus)
 			Q_DISABLE_COPY(Ping)
+
+			Q_PROPERTY(QString host READ host WRITE setHost NOTIFY hostChanged)
+			Q_PROPERTY(int interval READ interval WRITE setInterval NOTIFY intervalChanged)
+			Q_PROPERTY(bool running READ running WRITE setRunning NOTIFY runningChanged)
 		public:
 			explicit Ping(QObject* parent = nullptr);
-			explicit Ping(const QString& hostIP, QObject* parent = nullptr); 
+			explicit Ping(const QString& host,int interval = 1000,bool running = true, QObject* parent = nullptr); 
 			~Ping();
 			enum Error {
 				InitSocketFail,
@@ -57,10 +67,28 @@ namespace Neo {
 			 * if no set,default <1:Excellent,<50:Good,<200:Bad,<500:Terrible
 			 */
 			void setClassifyFn(std::function<NetworkTraffic(int)>);
-			
+
+			void classBegin() override;
+
+			void componentComplete() override;
+
+		signals:
+			void hostChanged(const QString &host);
+			void intervalChanged(int interval);
+			void runningChanged(bool running);
+
+		public:
+			QString host() const;
+			void setHost(const QString& host);
+			int interval() const;
+			void setInterval(int interval);
+			bool running() const;
+			void setRunning(bool running);
+
+		public slots:
 			bool isReady();
 
-			void start(int interval = 2000);
+			void restart(int interval = 1000);
 
 			void stop();
 
@@ -69,6 +97,7 @@ namespace Neo {
 			void networkTrafficNotify(NetworkTraffic nt, int delayMs);
 
 		private:
+			Q_DECLARE_PRIVATE(Ping)
 			PingPrivate* const d_ptr;
 		};
 

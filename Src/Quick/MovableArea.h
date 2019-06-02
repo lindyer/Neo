@@ -49,7 +49,8 @@ protected:
     void hoverEnterEvent(QHoverEvent *event) override;
 
 private:
-    MovableAreaPrivate *dptr = nullptr;
+	Q_DECLARE_PRIVATE(MovableArea)
+    MovableAreaPrivate * const d_ptr = nullptr;
 };
 
 } //Quick

@@ -38,4 +38,6 @@ include(../../../Neo/Src/Themes/Themes.pri)
 
 
 DISTFILES += $$PWD/*qml \
-    ../../../Neo/Src/Controls/*.qml
+    ../../../Neo/Src/Controls/*.qml \
+    ShowNeoTableView.qml \
+    ShowMovableListItemView.qml
