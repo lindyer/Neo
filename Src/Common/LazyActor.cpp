@@ -5,7 +5,7 @@ struct LazyActorPrivate {
 	QHash<int, std::function<void()> > typeNActor;
 };
 
-LazyActor::LazyActor(QObject* parent) : QObject(parent), _dptr(new LazyActorPrivate()) {
+LazyActor::LazyActor(QObject* parent) : QObject(parent), d_ptr(new LazyActorPrivate()) {
 
 }
 
@@ -17,27 +17,29 @@ LazyActor& LazyActor::instance() {
 
 
 void LazyActor::exec(int type, std::function<void()> fn, int interval) {
-	if (_dptr->typeNActor.contains(type)) {
-		_dptr->typeNActor.insert(type, fn);  //replace it
+	Q_D(LazyActor);
+	if (d->typeNActor.contains(type)) {
+		d->typeNActor.insert(type, fn);  //replace it
 		return;
 	}
 	int timeId = startTimer(interval, Qt::PreciseTimer);
-	_dptr->timerIdNType.insert(timeId, type);
-	_dptr->typeNActor.insert(type, fn);
+	d->timerIdNType.insert(timeId, type);
+	d->typeNActor.insert(type, fn);
 }
 
 void LazyActor::timerEvent(QTimerEvent* te) {
+	Q_D(LazyActor);
 	 int timerId = te->timerId();
-	 if (!_dptr->timerIdNType.contains(timerId)) {
+	 if (!d->timerIdNType.contains(timerId)) {
 		 qWarning() << "Can not find timerId";
 		 return;
 	 }
-	 int type = _dptr->timerIdNType.take(timerId);
-	 if (!_dptr->typeNActor.contains(type)) {
+	 int type = d->timerIdNType.take(timerId);
+	 if (!d->typeNActor.contains(type)) {
 		 qWarning() << "Can not find type";
 		 return;
 	 }
 	 killTimer(timerId);
-	 auto fn = _dptr->typeNActor.take(type);
+	 auto fn = d->typeNActor.take(type);
 	 fn();
 }

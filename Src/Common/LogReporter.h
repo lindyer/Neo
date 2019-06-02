@@ -3,13 +3,13 @@
 #include <QObject>
 #include <functional>
 
+class LogReporterPrivate;
 class LogReporter : public QObject
 {
 	Q_OBJECT
 
-
-private:
-	LogReporter(QObject *parent = nullptr);
+public:
+	LogReporter(const QString &serverUrl, const QString& username,QObject *parent = nullptr);
 	~LogReporter();	
 public:
 	enum Level {
@@ -23,15 +23,12 @@ public:
 	};
 
 	Q_ENUM(Level)
-	static void setProxy(std::function<void(const QString &, Level level)> handler);
+	void setProxy(std::function<void(const QString &, Level level)> && handler);
 
 public slots:
-	static void report(const QString &log, Level level = InfoLevel);
+	void report(const QString &log, Level level = InfoLevel);
 
 private:
-	static QString _levelDescription(Level level) ;
-
-private:
-	static std::function<void(const QString &, Level level)> _proxy;
-	static QString _username;
+	Q_DECLARE_PRIVATE(LogReporter)
+	LogReporterPrivate* d_ptr = nullptr;
 };

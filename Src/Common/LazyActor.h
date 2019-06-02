@@ -28,5 +28,6 @@ private:
 	explicit LazyActor(QObject *parent = nullptr);
 
 private:
-	LazyActorPrivate *_dptr;
+	Q_DECLARE_PRIVATE(LazyActor)
+	LazyActorPrivate * const d_ptr = nullptr;
 };

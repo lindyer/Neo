@@ -1,45 +1,53 @@
-#include "LogReporter.h"
-#include "HttpClient.h"
-#include "AppConfig.h"
+#include "LogReporter.h"  
 
 #include <qmetaobject.h>
 #include <qdebug.h>
 #include <qhostinfo.h>
+#include "utilities/HttpClient.h"
 
-QString LogReporter::_username;
-std::function<void(const QString &, LogReporter::Level level)> LogReporter::_proxy;
-LogReporter::LogReporter(QObject *parent)
-	: QObject(parent)
+class LogReporterPrivate { 
+public:
+	LogReporterPrivate(const QString& serverUrl, const QString& username);
+	QString serverUrl;
+	std::function<void(const QString&, LogReporter::Level level)> proxy;
+	QString username;
+	QString levelDescription(LogReporter::Level level);
+};
+
+
+LogReporterPrivate::LogReporterPrivate(const QString& serverUrl, const QString& username)
+	:serverUrl(serverUrl),username(username) {
+
+}
+
+
+QString LogReporterPrivate::levelDescription(LogReporter::Level level) {
+	QMetaEnum me = QMetaEnum::fromType<LogReporter::Level>();
+	return me.key(level);
+}
+
+
+LogReporter::LogReporter(const QString& serverUrl, const QString& username, QObject *parent)
+	: QObject(parent), d_ptr(new LogReporterPrivate(serverUrl,username))
 {
 }
 
 LogReporter::~LogReporter()
 {
+	Q_D(LogReporter);
+	delete d;
 }
 
 void LogReporter::report(const QString& log, Level level) {
-	if(_proxy) {
-		_proxy(log, level);
+	Q_D(LogReporter);
+	if(d->proxy) {
+		d->proxy(log, level);
 	} else {
-		static QString defaultUrl = AppConfig::instance().getString("LogUrl");
-		HttpClient(defaultUrl).param("uid", QSysInfo::machineUniqueId()).param("host",QHostInfo::localHostName()).param("account", _username).param("level", QString::number(level)).param("log", log).post(nullptr);
+		HttpClient(d->serverUrl).param("uid", QSysInfo::machineUniqueId()).param("host",QHostInfo::localHostName()).param("account", d->username).param("level", QString::number(level)).param("log", log).post(nullptr);
 	}
 }
 
-void LogReporter::setProxy(std::function<void(const QString &, Level level)> handler) {
-	_proxy = handler;
-}
-
-QString LogReporter::_levelDescription(Level level) {
-
-	QMetaEnum me = QMetaEnum::fromType<Level>();
-	return me.key(level);
-	//switch (level) {
-	//case Debug: return "Debug";
-	//case Info: return "Info";
-	//case Warn: return "Warn";
-	//case Critical: return "Critical";
-	//case Fatal: return "Fatal";
-	//}
-	//return QString();
+void LogReporter::setProxy(std::function<void(const QString &, Level level)> &&handler) {
+	Q_D(LogReporter);
+	d->proxy = std::move(handler);
 }

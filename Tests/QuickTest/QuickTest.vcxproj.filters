@@ -99,6 +99,15 @@
     <ClCompile Include="..\..\Src\Helpers\NetHelper.cpp">
       <Filter>Neo\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Common\LazyActor.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\LogReporter.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Helpers\LogHelper.cpp">
+      <Filter>Neo\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -142,6 +151,12 @@
     <QtMoc Include="..\..\Src\Models\NeoTableHeaderModel.h">
       <Filter>Neo\Models</Filter>
     </QtMoc>
+    <QtMoc Include="..\..\Src\Common\LazyActor.h">
+      <Filter>Neo\Common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Common\LogReporter.h">
+      <Filter>Neo\Common</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Models\NeoModelHelper.h">
@@ -163,6 +178,9 @@
       <Filter>Neo\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Helpers\NetHelper.h">
+      <Filter>Neo\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Helpers\LogHelper.h">
       <Filter>Neo\Helpers</Filter>
     </ClInclude>
   </ItemGroup>

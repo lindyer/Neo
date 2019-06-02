@@ -1,7 +1,6 @@
 #pragma once
 #include <QString>
 
-
 namespace Neo {
 	
 	namespace Net {
