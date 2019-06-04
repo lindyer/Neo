@@ -12,11 +12,11 @@
 
 #include <QQuickItem>
 
-namespace Neo {
+namespace neo {
 
 namespace Quick {
 
-struct MovableAreaPrivate;
+class MovableAreaPrivate;
 
 class MovableArea : public QQuickItem
 {

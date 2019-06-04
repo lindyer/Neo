@@ -9,7 +9,7 @@
 
 #include "Numeric.h"
 
-namespace Neo {
+namespace neo {
 
     Numeric::Numeric(QObject *parent) : QObject(parent)
     {

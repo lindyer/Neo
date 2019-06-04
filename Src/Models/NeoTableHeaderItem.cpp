@@ -1,7 +1,8 @@
 #include "NeoTableHeaderItem.h"
 
 
-struct NeoTableHeaderItemPrivate {
+class NeoTableHeaderItemPrivate {
+public:
 	QString title;
 	qreal itemWidth = 80;
 	bool sortable = false;

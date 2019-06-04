@@ -3,7 +3,7 @@
 
 #include <QStringList>
 
-namespace Neo {
+namespace neo {
 	
 	namespace Net {
 		

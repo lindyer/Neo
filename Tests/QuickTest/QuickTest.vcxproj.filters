@@ -108,6 +108,9 @@
     <ClCompile Include="..\..\Src\Helpers\LogHelper.cpp">
       <Filter>Neo\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Helpers\FileHelper.cpp">
+      <Filter>Neo\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -181,6 +184,12 @@
       <Filter>Neo\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Helpers\LogHelper.h">
+      <Filter>Neo\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Helpers\FileHelper.h">
+      <Filter>Neo\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Helpers\Helpers.h">
       <Filter>Neo\Helpers</Filter>
     </ClInclude>
   </ItemGroup>

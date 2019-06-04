@@ -6,7 +6,8 @@
 #include <QFontMetrics>
 #include <QDebug>
 
-struct NeoAbstractTableModelPrivate {
+class NeoAbstractTableModelPrivate {
+public:
 	QVector<NeoTableHeaderItem*> headerItems;
 	QVector<int> hiddenColumns;
 	std::function<int(QVariant)> contentMetricsFunctor;

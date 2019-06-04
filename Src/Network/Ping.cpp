@@ -11,7 +11,7 @@
 #include "Helpers/NetHelper.h"
 
 
-namespace Neo {
+namespace neo {
 	namespace Net {
 
 

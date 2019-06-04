@@ -10,7 +10,7 @@
 #include <qDebug>
 
 
-namespace Neo {
+namespace neo {
 
     Common::Common(QObject *parent) : QObject(parent)
     {

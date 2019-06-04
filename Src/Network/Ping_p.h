@@ -23,7 +23,7 @@
 class QHostInfo;
 
 
-namespace Neo {
+namespace neo {
 	namespace Net {
 		class Ping;
 		class PingWorker;

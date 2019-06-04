@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QVariant>
 
-struct NeoTableHeaderItemPrivate;
+class NeoTableHeaderItemPrivate;
 class NeoTableHeaderItem : public QObject
 {
 	Q_OBJECT

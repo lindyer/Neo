@@ -10,7 +10,7 @@
 #include <QtCore/QObject>
 #include <QtCore/qglobal.h>
 
-namespace Neo {
+namespace neo {
 
     class Numeric : public QObject
     {

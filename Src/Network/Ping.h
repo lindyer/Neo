@@ -15,7 +15,7 @@
 #include <QQmlParserStatus>
 
 
-namespace Neo {
+namespace neo {
 
 	namespace Net {
 

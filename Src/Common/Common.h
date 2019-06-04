@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QJsonDocument>
 
-namespace Neo {
+namespace neo {
 
     class Common : public QObject
     {

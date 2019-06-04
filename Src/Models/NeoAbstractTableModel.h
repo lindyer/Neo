@@ -3,7 +3,7 @@
 #include "NeoTableHeaderItem.h"
 #include <QQmlListProperty>
 
-struct NeoAbstractTableModelPrivate;
+class NeoAbstractTableModelPrivate;
 class NeoAbstractTableModel : public QAbstractTableModel {
 	Q_OBJECT 
 

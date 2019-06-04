@@ -6,7 +6,7 @@
  * @date:	2019-5-31
  */
 
-namespace Neo {
+namespace neo {
 
 class Noncopyable {
 protected:

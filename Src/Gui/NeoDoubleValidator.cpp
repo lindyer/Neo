@@ -1,7 +1,7 @@
 ﻿#include "NeoDoubleValidator.h"
 #include "../Common/Numeric.h"
 
-namespace Neo {
+namespace neo {
 
 namespace Gui {
 

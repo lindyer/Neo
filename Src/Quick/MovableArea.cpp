@@ -1,11 +1,12 @@
 ﻿#include "MovableArea.h"
 #include <QQuickWindow>
 
-namespace Neo {
+namespace neo {
 
 namespace Quick {
 
-struct MovableAreaPrivate {
+class MovableAreaPrivate {
+public:
     QObject* target = nullptr;
     QQuickItem* item = nullptr;
     QQuickWindow* window = nullptr;

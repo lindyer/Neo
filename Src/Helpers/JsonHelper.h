@@ -13,7 +13,7 @@
 #include <QSharedPointer>
 
 
-namespace Neo {
+namespace neo {
 	/**
 	 * \brief ÒÆ³ýJSON×Ö·û´®ÖÐ×¢ÊÍ
 	 * \param content JSON×Ö·û´®

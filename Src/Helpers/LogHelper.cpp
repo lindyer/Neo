@@ -2,7 +2,7 @@
 #include "Common/LogReporter.h"
 
 
-namespace Neo {
+namespace neo {
 
 	void defaultLogReporter(const QString& log,LogReporter::Level level, const QString& serverUrl, const QString& username) {
 		static LogReporter logReporter(serverUrl,username);

@@ -12,7 +12,7 @@
 
 #include <QtQml>
 
-using namespace Neo::Quick;
+using namespace neo::Quick;
 
 inline void registerNeoQuickType() {
     qmlRegisterType<MovableArea>("Neo.Quick",1,0,"MovableArea");

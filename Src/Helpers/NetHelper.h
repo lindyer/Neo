@@ -1,7 +1,7 @@
 #pragma once
 #include <QString>
 
-namespace Neo {
+namespace neo {
 	
 	namespace Net {
 

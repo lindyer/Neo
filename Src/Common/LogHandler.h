@@ -53,7 +53,7 @@ public slots:
 	}
 
 private:
-    LogHandler(QObject *parent = nullptr) { 
+    LogHandler(QObject *parent = nullptr) : QObject(parent) {
 		QString configPath = QtCommon::workPath(AppConfig::instance().getString("Log4qt.Path"));
 		Log4Qt::PropertyConfigurator::configure(configPath);
 		logger()->info("################################################################");
@@ -94,7 +94,7 @@ public slots:
 	 
 
 private:
-	LogHandler(QObject *parent = nullptr) {
+	LogHandler(QObject *parent = nullptr): QObject(parent) {
 		//https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
 		spdlog::flush_on(spdlog::level::info);
 		spdlog::flush_every(std::chrono::seconds(3));

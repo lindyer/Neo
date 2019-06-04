@@ -10,7 +10,7 @@
 
 #include <QDoubleValidator>
 
-namespace Neo {
+namespace neo {
 
 namespace Gui {
 

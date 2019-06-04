@@ -19,10 +19,10 @@
 #include "Models/NeoTableHeaderModel.h"
 #include "Common/ScopeGuard.h"
 #include "Common/Common.h"
-#include "Helpers/JsonHelper.h"
+#include "Helpers/Helpers.h"
 
 
-using namespace Neo;
+using namespace neo;
 
 int main(int argc, char *argv[])
 {
@@ -30,16 +30,14 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-
     registerNeoQuickType();
 	qmlRegisterType<TableModelTest>("Neo.Tests", 1, 0, "TableModelTest");
 	qmlRegisterType<NeoTableHeaderItem>("Neo.Quick", 1, 0, "NeoTableHeaderItem");
-	qmlRegisterType<NeoTableHeaderModel>("Neo.Quick", 1, 0, "NeoTableHeaderModel");
+	qmlRegisterType<NeoTableHeaderModel>("Neo.Quick", 1, 0, "NeoTableHeaderModel"); 
 
-	
     QQmlApplicationEngine engine;
-	engine.addImportPath("E:/Projects/Neo/Src/Quick");
-    engine.load(QUrl(QStringLiteral("file:///F:/QtProjects/Projects/Neo/Tests/QuickTest/main.qml")));
+    engine.addImportPath("../../Src/QML");
+    engine.load(urlByRelativePath("main.qml"));
     if (engine.rootObjects().isEmpty())
         return -1;
 

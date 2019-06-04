@@ -13,7 +13,7 @@
 //Qt's Way
 //auto cleanup = qScopeGuard([] { code you want executed goes HERE; });
 
-namespace Neo {
+namespace neo {
 	
 class ScopeGuard: public Noncopyable
 {
