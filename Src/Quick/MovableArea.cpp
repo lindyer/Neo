@@ -12,6 +12,7 @@ public:
     QQuickWindow* window = nullptr;
     QPoint cursorPos;
 	bool hoverEnable = false;
+	bool pressed = false;
     Qt::CursorShape cursorShape = Qt::ArrowCursor;
 };
 
@@ -86,13 +87,36 @@ void MovableArea::setCursorShape(int cursorShape)
 }
 
 
-void MovableArea::mousePressEvent(QMouseEvent*) {
-	Q_D(MovableArea);
-    d->cursorPos = QCursor::pos();
+bool MovableArea::pressed() const {
+	const Q_D(MovableArea);
+	return d->pressed;
 }
 
 
-void MovableArea::mouseMoveEvent(QMouseEvent*) {
+void MovableArea::setPressed(bool pressed) {
+	Q_D(MovableArea);
+	if(pressed == d->pressed) {
+		return;
+	}
+	d->pressed = pressed;
+	emit pressedChanged(pressed);
+}
+
+
+void MovableArea::mousePressEvent(QMouseEvent*) {
+	Q_D(MovableArea);
+    d->cursorPos = QCursor::pos(); 
+	d->pressed = true;
+}
+
+
+void MovableArea::mouseReleaseEvent(QMouseEvent* event) { 
+	Q_D(MovableArea);
+	d->pressed = false; 
+}
+
+
+void MovableArea::mouseMoveEvent(QMouseEvent* me) {
 	Q_D(MovableArea);
     auto cursorPos = QCursor::pos();
     auto deltaX = cursorPos.x() - d->cursorPos.x();
@@ -105,7 +129,7 @@ void MovableArea::mouseMoveEvent(QMouseEvent*) {
         d->window->setY(d->window->y() + deltaY);
     }
     d->cursorPos = cursorPos;
-    emit positionChanged(cursorPos,deltaX,deltaY);
+    emit positionChanged(cursorPos,deltaX,deltaY, me->x(),me->y());
 }
 
 

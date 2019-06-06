@@ -1,4 +1,4 @@
-import QtQuick 2.12
+﻿import QtQuick 2.12
 import QtQuick.Controls 2.5
 import "../../Src/Controls"
 import "../../Src/Effects"
@@ -46,9 +46,6 @@ Item {
                 color: "#F0F0F0"
                 width: 1
             }
-
-
-
             NeoButton {
                 id: tableItemDefaultText
                 text: holder.itemData.title + holder.itemData.extraData.otherData
@@ -89,7 +86,7 @@ Item {
         }
     }
 
-    NeoTableView {
+    TmpTableView {
         id: tableView
         tableItemComponentSelector: function(row,column) {
             if(row === 1 && column === 1) {
@@ -99,53 +96,32 @@ Item {
             }
         }
         headerItemComponentSelector: function(column) {
-            if(column === 1) {
-                return headerItemButtonComponent
-            } else {
+//            if(column === 1) {
+//                return headerItemButtonComponent
+//            } else {
                 return headerItemDefaultComponent
-            }
+//            }
         }
+        Component.onCompleted: {
 
-        headerModel: NeoTableHeaderModel {
-            id: neoTableHeaderModel
-            Component.onCompleted: {
-                for(var index in headerItems) {
-                    var item = headerItems[index]
-                    var action = headerItemActionComponent.createObject(headerMenu,{index:index,text:item.title,checked:item.visible})
-                    headerMenu.addAction(action)
-                }
-            }
-
-            headerItems: [
-                NeoTableHeaderItem {
-                    title: "-列1"
-                    itemWidth: 200
-                    titleFontSize: 14
-                    titleHorizontalAlignment: Text.AlignRight
-                },
-                NeoTableHeaderItem {
-                    title: "列2"
-                    itemWidth: 180
-                    titleFontSize: 10
-                    //you can expand what you want by extraData
-                    extraData: { "otherData": " Look At Me ^-^" }
-                },
-                NeoTableHeaderItem {
-                    title: "列3"
-                    itemWidth: 100
-                    titleFontSize: 12
-                },
-                NeoTableHeaderItem {
-                    title: "列4"
-                    itemWidth: 60
-                    titleFontSize: 16
-                }
-            ]
         }
+        headerModel: tableHeaderModel
+//        headerModel: NeoTableHeaderModel {
+//            id: neoTableHeaderModel
+//            jsonFilePath: "app.settings"
+//            keyPath: "tables.tableName.header"
+//            Component.onCompleted: {
+//                for(var index in headerItems) {
+//                    var item = headerItems[index]
+//                    var action = headerItemActionComponent.createObject(headerMenu,{index:index,text:item.title,checked:item.visible})
+//                    headerMenu.addAction(action)
+//                }
+//            }
+//        }
 
-        tableModel: TableModelTest {
+        tableModel: tableModelTest/*TableModelTest {
             id: tableModel
-        }
+        }*/
         anchors.fill: parent
         anchors.margins: 20
     }

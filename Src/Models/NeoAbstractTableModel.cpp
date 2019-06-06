@@ -8,6 +8,7 @@
 
 class NeoAbstractTableModelPrivate {
 public:
+	NeoTableHeaderModel* headerModel = nullptr;
 	QVector<NeoTableHeaderItem*> headerItems;
 	QVector<int> hiddenColumns;
 	std::function<int(QVariant)> contentMetricsFunctor;
@@ -25,6 +26,12 @@ NeoAbstractTableModel::~NeoAbstractTableModel() {
 
 QHash<int, QByteArray> NeoAbstractTableModel::roleNames() const {
 	return defaultTableRoleNames();
+}
+
+
+int NeoAbstractTableModel::columnCount(const QModelIndex& parent) const {
+	const Q_D(NeoAbstractTableModel);
+	return qMax(d->headerItems.size() - d->hiddenColumns.size(),0);
 }
 
 
@@ -47,7 +54,7 @@ void NeoAbstractTableModel::removeHiddenColumn(int role) {
 
 
 int NeoAbstractTableModel::resizeToContents(int column, const QFont& font) {
-	if(column < 0 || column >= columnCount()) {
+	if(column < 0 || column >= columnCount(QModelIndex())) {
 		return 100;
 	}
 	int maxWidth = 0;
@@ -74,6 +81,12 @@ int NeoAbstractTableModel::resizeToContents(int column, const QFont& font) {
 }
 
 
+void NeoAbstractTableModel::bindNeoTableHeaderModel(NeoTableHeaderModel* model) {
+	Q_D(NeoAbstractTableModel);
+	d->headerModel = model;
+}
+
+
 void NeoAbstractTableModel::setContentMetrics(std::function<int(const QVariant &)> &&functor) {
 	Q_D(NeoAbstractTableModel);
 	d->contentMetricsFunctor = std::move(functor);
@@ -85,7 +98,6 @@ qreal NeoAbstractTableModel::headerWidth() {
 	auto &list = d->headerItems;
 	qreal sum = 0;
 	for(int i = 0;i < list.size(); i++) {
-		
 		sum += list[i]->itemWidth();
 	}
 	return sum;

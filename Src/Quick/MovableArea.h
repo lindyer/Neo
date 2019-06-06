@@ -25,6 +25,7 @@ class MovableArea : public QQuickItem
     Q_PROPERTY(QObject* target READ target WRITE setTarget NOTIFY targetChanged)
 	Q_PROPERTY(bool hoverEnable READ hoverEnable WRITE setHoverEnable NOTIFY hoverEnableChanged)
     Q_PROPERTY(int cursorShape READ cursorShape WRITE setCursorShape NOTIFY cursorShapeChanged)
+	Q_PROPERTY(bool pressed READ pressed WRITE setPressed NOTIFY pressedChanged)
 public:
     MovableArea(QQuickItem* parent = nullptr);
     ~MovableArea() override;
@@ -34,16 +35,20 @@ public:
 	void setHoverEnable(bool enable);
     int cursorShape() const;
     void setCursorShape(int cursorShape);
+	bool pressed() const;
+	void setPressed(bool pressed);
 
 signals:
     void targetChanged(QObject* target);
-    void positionChanged(QPoint cursorPos,int deltaX,int deltaY);
+    void positionChanged(QPoint cursorPos,int deltaX,int deltaY,int mouseX,int mouseY);
 	void hoverEnableChanged(bool hoverEnable);
     void cursorShapeChanged(int cursorShape);
     void doubleClicked();
+	void pressedChanged(bool pressed);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseDoubleClickEvent(QMouseEvent* event) override;
     void hoverEnterEvent(QHoverEvent *event) override;

@@ -16,6 +16,9 @@ Item {
 
     //header properties
     property color headerSplitColor: "#D8D8D8"
+    property int dragedIndex: -1
+    property int dragedMoveX: 0
+
 
     //row properties
     property color normalColor: "transparent"
@@ -120,8 +123,6 @@ Item {
             pixelSize: rfs(14)
         }
     }
-
-
     ListView {
         id: headerListView
         width: parent.width
@@ -130,17 +131,30 @@ Item {
         contentX: tableView.contentX
         interactive: false
         clip: true
+//        moveDisplaced: Transition {
+//            NumberAnimation { properties: "x,y"; duration: 300 }
+//        }
         delegate: Loader {
             id: headerItemLoader
             //define properties which can be accessed by loader.item
             property var itemData: modelData
             property var itemColumn: index
             clip: true
+            onItemDataChanged: {
+                print(index,itemData.title)
+            }
 
             width: modelData.visible ? modelData.itemWidth : 1
             height: titleBarHeight
 
             sourceComponent: headerItemComponentSelector(index,modelData)
+
+            MouseArea {
+                id: wholeMouseArea
+                anchors.fill: parent
+                cursorShape: pressed ? Qt.PointingHandCursor : Qt.ArrowCursor
+
+            }
 
             Item {
                 width: rw(5)
@@ -148,11 +162,12 @@ Item {
                 anchors {
                     right: parent.right
                 }
+                enabled: !wholeMouseArea.pressed
                 //rise and make headerItemMouseArea handle first
                 z: headerItemLoader.item.z + 1
                 MovableArea {
                     id: headerItemMouseArea
-                    enabled: modelData.visible
+                    enabled: modelData.visible && !wholeMouseArea.pressed
                     anchors.fill: parent
                     hoverEnable: true
                     cursorShape: Qt.SizeHorCursor

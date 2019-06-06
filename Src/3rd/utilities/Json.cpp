@@ -2,7 +2,7 @@
 *  it is copy from qtdebug.com,somewhere changed by linjianpeng(lindyer)
 */
 
-#include "json.h"
+#include "Json.h"
 #include <QDebug>
 #include <QFile>
 #include <QTextStream>
@@ -123,7 +123,7 @@ void JsonPrivate::removeRootKey(const QString &key)
 /*-----------------------------------------------------------------------------|
  |                             Json implementation                             |
  |----------------------------------------------------------------------------*/
-Json::Json(const QString &jsonOrJsonFilePath, bool fromFile) : d(new JsonPrivate(jsonOrJsonFilePath, fromFile)) {
+Json::Json(const QString &jsonOrJsonFilePath, bool fromFile,QObject *parent) : QObject(parent), d(new JsonPrivate(jsonOrJsonFilePath, fromFile)) {
 }
 
 Json::~Json() {

@@ -37,6 +37,11 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.addImportPath("../../Src/QML");
+
+	TableModelTest test;
+	NeoTableHeaderModel headerModel("app.settings","tables.tableName.header");
+	engine.rootContext()->setContextProperty("tableModelTest", &test);
+	engine.rootContext()->setContextProperty("tableHeaderModel", &headerModel);
     engine.load(urlByRelativePath("main.qml"));
     if (engine.rootObjects().isEmpty())
         return -1;

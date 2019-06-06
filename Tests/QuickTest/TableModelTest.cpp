@@ -32,6 +32,6 @@ int TableModelTest::rowCount(const QModelIndex& parent) const {
 }
 
 
-int TableModelTest::columnCount(const QModelIndex& parent) const {
-	return  ColumnCount;
-}
+//int TableModelTest::columnCount(const QModelIndex& parent) const {
+//	return  ColumnCount;
+//}

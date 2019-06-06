@@ -111,6 +111,9 @@
     <ClCompile Include="..\..\Src\Helpers\FileHelper.cpp">
       <Filter>Neo\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Models\NeoTableHeaderItem_p.cpp">
+      <Filter>Neo\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -160,6 +163,9 @@
     <QtMoc Include="..\..\Src\Common\LogReporter.h">
       <Filter>Neo\Common</Filter>
     </QtMoc>
+    <QtMoc Include="..\..\Src\3rd\utilities\Json.h">
+      <Filter>Neo\3rd\utilities</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Models\NeoModelHelper.h">
@@ -169,9 +175,6 @@
       <Filter>Neo\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\3rd\utilities\HttpClient.h">
-      <Filter>Neo\3rd\utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\3rd\utilities\Json.h">
       <Filter>Neo\3rd\utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Helpers\JsonHelper.h">
@@ -191,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Helpers\Helpers.h">
       <Filter>Neo\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Models\NeoTableHeaderItem_p.h">
+      <Filter>Neo\Models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

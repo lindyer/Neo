@@ -12,10 +12,9 @@ import NeoQuick 1.0
 NeoAppWindow {
     id: window
 
-
-//    ShowNeoTableView {
-//        anchors.fill: parent
-//    }
+    ShowNeoTableView {
+        anchors.fill: parent
+    }
 
 //    NeoFontHolder {
 //        text: "I am font holder"
@@ -27,5 +26,8 @@ NeoAppWindow {
 
 //    ShowMovableListItemView {
 //        anchors.fill: parent
+//    }
+//    TmpCopy {
+
 //    }
 }

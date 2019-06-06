@@ -3,6 +3,7 @@
 #include "NeoTableHeaderItem.h"
 #include <QQmlListProperty>
 
+class NeoTableHeaderModel;
 class NeoAbstractTableModelPrivate;
 class NeoAbstractTableModel : public QAbstractTableModel {
 	Q_OBJECT 
@@ -13,7 +14,7 @@ public:
 
 	~NeoAbstractTableModel();
 	QHash<int,QByteArray> roleNames() const override;
-	//int columnCount(const QModelIndex& parent) const override final;
+	int columnCount(const QModelIndex& parent) const override final;
 	qreal headerWidth();
 
 signals:
@@ -28,6 +29,8 @@ public slots:
 
 	//根据内容大小调整
 	int resizeToContents(int column,const QFont &font);
+
+	void bindNeoTableHeaderModel(NeoTableHeaderModel* model);
 
 public:
 	/**

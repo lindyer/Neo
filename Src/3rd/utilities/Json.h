@@ -1,5 +1,5 @@
-#ifndef JSONUTIL_H
-#define JSONUTIL_H
+#pragma once
+
 
 /**
 *  it is copy from qtdebug.com,somewhere changed by linjianpeng(lindyer)
@@ -10,8 +10,8 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <functional>
+#include <QObject>
 
-struct JsonPrivate;
 
 /**
  * Qt 的 JSON API 读写多层次的属性不够方便，这个类的目的就是能够使用带 "." 的路径格式访问 Json 的属性，例如
@@ -45,7 +45,10 @@ struct JsonPrivate;
  *
  * 注意: JSON 文件要使用 UTF-8 编码。
  */
-class Json {
+
+struct JsonPrivate;
+class Json: public QObject {
+	Q_OBJECT
 public:
     /**
      * 使用 JSON 字符串或者从文件读取 JSON 内容创建 Json 对象。
@@ -55,9 +58,10 @@ public:
      * @param jsonOrJsonFilePath JSON 的字符串内容或者 JSON 文件的路径
      * @param fromFile 为 true，则 jsonOrJsonFilePath 为 JSON 文件的路径，为 false 则 jsonOrJsonFilePath 为 JSON 的字符串内容
      */
-    explicit Json(const QString &jsonOrJsonFilePath = "{}", bool fromFile = false);
+    explicit Json(const QString &jsonOrJsonFilePath = "{}", bool fromFile = false, QObject *parent = nullptr);
     ~Json();
 
+public slots:
     bool isValid() const;        // JSON 是否有效，有效的 JSON 返回 true，否则返回 false
     QString errorString() const; // JSON 无效时的错误信息
 
@@ -88,13 +92,6 @@ public:
     void set(const QString &path, const QStringList &strings);
     void removeRootKey(const QString &key);
 
-    /**
-     * @brief 把 JSON 保存到 path 指定的文件
-     *
-     * @param path 文件的路径
-     * @param pretty 为 true 时格式化 JSON 字符串，为 false 则使用压缩格式去掉多余的空白字符
-     */
-    void save(const QString &path, std::function<QByteArray(const QByteArray &)> encryptFn = nullptr, bool pretty = true) const;
 
     /**
      * @brief 把 Json 对象转换为 JSON 字符串
@@ -103,10 +100,16 @@ public:
      */
     QString toString(bool pretty = true) const;
 
-//    static QString stripComment(const QString &str,bool whitespace = true);
-
 public:
+	/**
+	 * @brief 把 JSON 保存到 path 指定的文件
+	 *
+	 * @param path 文件的路径
+	 * @param pretty 为 true 时格式化 JSON 字符串，为 false 则使用压缩格式去掉多余的空白字符
+	 */
+	void save(const QString& path, std::function<QByteArray(const QByteArray&)> encryptFn = nullptr, bool pretty = true) const;
+
+private:
     JsonPrivate *d;
 };
 
-#endif // JSONUTIL_H

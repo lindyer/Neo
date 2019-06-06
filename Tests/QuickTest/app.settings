@@ -1,0 +1,47 @@
+{
+    "tables": {
+        "tableName": {
+            "header": {
+                "default": {
+                    "extraData": null,
+                    "field": null,
+                    "minWidth": 40,
+                    "movable": true,
+                    "resizable": true,
+                    "sortable": true,
+                    "titleFontSize": 14,
+                    "titleHorizontalAlignment": 132,
+                    "toolTip": "",
+                    "visible": true,
+                    "width": 100
+                },
+                "items": [
+                    {
+                        "index": 0,
+                        "sortable": false,
+                        "title": "序号",
+                        "width": 101
+                    },
+                    {
+                        "field": "Date",
+                        "index": 1,
+                        "title": "日期",
+                        "width": 231
+                    },
+                    {
+                        "field": "StockCode",
+                        "index": 2,
+                        "title": "股票代码",
+                        "width": 139
+                    },
+                    {
+                        "field": "StockName",
+                        "index": 3,
+                        "title": "股票名称",
+                        "width": 131
+                    }
+                ]
+            }
+        }
+    }
+}

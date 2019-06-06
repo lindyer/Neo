@@ -1,20 +1,6 @@
 #include "NeoTableHeaderItem.h"
+#include "NeoTableHeaderItem_p.h"
 
-
-class NeoTableHeaderItemPrivate {
-public:
-	QString title;
-	qreal itemWidth = 80;
-	bool sortable = false;
-	QString toolTip;
-	qreal titleFontSize = 14;
-	bool visible = true;
-	bool movable = true;
-	bool resizable = true;
-	int minWidth = 40;
-	int titleHorizontalAlignment = Qt::AlignCenter;
-	QVariant extraData;
-};
 
 NeoTableHeaderItem::NeoTableHeaderItem(QObject* parent): QObject(parent), d_ptr(new NeoTableHeaderItemPrivate()){
 }
@@ -33,6 +19,22 @@ NeoTableHeaderItem::~NeoTableHeaderItem() {
 }
 
 
+int NeoTableHeaderItem::index() const {
+	const Q_D(NeoTableHeaderItem);
+	return d->index;
+}
+
+
+void NeoTableHeaderItem::setIndex(int index) {
+	Q_D(NeoTableHeaderItem);
+	if(index == d->index) {
+		return;
+	}
+	d->index = index;
+	indexChanged(index);
+}
+
+
 QString NeoTableHeaderItem::title()  const {
 	const Q_D(NeoTableHeaderItem);
 	return d->title;
@@ -46,22 +48,24 @@ void NeoTableHeaderItem::setTitle(const QString& title) {
 	}
 	d->title = title;
 	emit titleChanged(title);
+	emit saveChange(d->index,"title", title);
 }
 
 
-qreal NeoTableHeaderItem::itemWidth() const {
+int NeoTableHeaderItem::itemWidth() const {
 	const Q_D(NeoTableHeaderItem);
 	return d->itemWidth;
 }
 
 
-void NeoTableHeaderItem::setItemWidth(qreal itemWidth) {
+void NeoTableHeaderItem::setItemWidth(int itemWidth) {
 	Q_D(NeoTableHeaderItem);
 	if(itemWidth == d->itemWidth) {
 		return;
 	}
 	d->itemWidth = itemWidth;
 	emit itemWidthChanged(itemWidth);
+	emit saveChange(d->index, "width", itemWidth);
 }
 
 
@@ -78,6 +82,7 @@ void NeoTableHeaderItem::setSortable(bool sortable) {
 	}
 	d->sortable = sortable;
 	emit sortableChanged(sortable);
+	emit saveChange(d->index, "sortable", sortable);
 }
 
 
@@ -94,22 +99,24 @@ void NeoTableHeaderItem::setToolTip(const QString& toolTip) {
 	}
 	d->toolTip = toolTip;
 	emit toolTipChanged(toolTip);
+	emit saveChange(d->index, "toolTip", toolTip);
 }
 
 
-qreal NeoTableHeaderItem::titleFontSize() const {
+int NeoTableHeaderItem::titleFontSize() const {
 	const Q_D(NeoTableHeaderItem);
 	return d->titleFontSize;
 }
 
 
-void NeoTableHeaderItem::setTitleFontSize(qreal titleFontSize) {
+void NeoTableHeaderItem::setTitleFontSize(int titleFontSize) {
 	Q_D(NeoTableHeaderItem);
 	if(titleFontSize == d->titleFontSize) {
 		return;
 	}
 	d->titleFontSize = titleFontSize;
 	emit titleFontSizeChanged(titleFontSize);
+	emit saveChange(d->index, "titleFontSize", titleFontSize);
 }
 
 
@@ -126,6 +133,7 @@ void NeoTableHeaderItem::setVisible(bool visible) {
 	}
 	d->visible = visible;
 	emit visibleChanged(visible);
+	emit saveChange(d->index, "visible", visible);
 }
 
 
@@ -142,6 +150,7 @@ void NeoTableHeaderItem::setMovable(bool movable) {
 	}
 	d->movable = movable;
 	emit movableChanged(movable);
+	emit saveChange(d->index, "movable", movable);
 }
 
 
@@ -158,6 +167,7 @@ void NeoTableHeaderItem::setResizable(bool resizable) {
 	}
 	d->resizable = resizable;
 	emit resizableChanged(resizable);
+	emit saveChange(d->index, "resizable", resizable);
 }
 
 
@@ -174,6 +184,7 @@ void NeoTableHeaderItem::setMinWidth(int minWidth) {
 	}
 	d->minWidth = minWidth;
 	emit minWidthChanged(minWidth);
+	emit saveChange(d->index, "minWidth", minWidth);
 }
 
 
@@ -190,20 +201,22 @@ void NeoTableHeaderItem::setTitleHorizontalAlignment(int titleHorizontalAlignmen
 	}
 	d->titleHorizontalAlignment = titleHorizontalAlignment;
 	emit titleHorizontalAlignmentChanged(titleHorizontalAlignment);
+	emit saveChange(d->index, "titleHorizontalAlignment", titleHorizontalAlignment);
 }
 
 
-QVariant NeoTableHeaderItem::extraData() const {
+QJsonValue NeoTableHeaderItem::extraData() const {
 	const Q_D(NeoTableHeaderItem);
 	return d->extraData;
 }
 
 
-void NeoTableHeaderItem::setExtraData(const QVariant& extraData) {
+void NeoTableHeaderItem::setExtraData(const QJsonValue& extraData) {
 	Q_D(NeoTableHeaderItem);
 	if(extraData == d->extraData) {
 		return;
-	}
+	} 
 	d->extraData = extraData;
 	emit extraDataChanged(extraData);
+	emit saveChange(d->index, "extraData", extraData);
 }

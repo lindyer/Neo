@@ -12,23 +12,24 @@
 namespace neo { 
 
 	void removeJsonComment(QString& content) { 
-#ifndef JSON_FILE_PRINT_OFF
-		qDebug() << content;
-#endif
+//#ifndef JSON_FILE_PRINT_OFF
+//		qDebug() << content;
+//#endif
 		std::function<void(QString&)> functor;
-		int searchIndex = 0;
-		functor = [&functor, &searchIndex](QString& str) {
-			int doubleSlashIndex = str.indexOf("//", searchIndex);
+		int dobuleSlashSearchIndex = 0;
+		int slashStarSearchIndex = 0;
+		functor = [&functor, &dobuleSlashSearchIndex,&slashStarSearchIndex](QString& str) {
+			int doubleSlashIndex = str.indexOf("//", dobuleSlashSearchIndex);
 			if (doubleSlashIndex != -1) {
-				searchIndex = doubleSlashIndex;
-				int returnIndex = str.indexOf("\n", searchIndex + 2);
+				dobuleSlashSearchIndex = doubleSlashIndex;
+				int returnIndex = str.indexOf("\n", dobuleSlashSearchIndex + 2);
 				str.remove(doubleSlashIndex, returnIndex - doubleSlashIndex);
 				functor(str);
 			}
-			int slashStarIndex = str.indexOf("/*", searchIndex);
+			int slashStarIndex = str.indexOf("/*", slashStarSearchIndex);
 			if (slashStarIndex != -1) {
-				searchIndex = slashStarIndex;
-				int starSlashIndex = str.indexOf("*/", searchIndex + 2);
+				slashStarSearchIndex = slashStarIndex;
+				int starSlashIndex = str.indexOf("*/", slashStarSearchIndex + 2);
 				str.remove(slashStarIndex, starSlashIndex - slashStarIndex + 2);
 				functor(str);
 			}
@@ -48,12 +49,37 @@ namespace neo {
 	}
 
 
-	QSharedPointer<Json> createJsonPtr(const QString& jsonFilePath, bool haveComment) {
+	QSharedPointer<Json> createJsonSharedPtr(const QString& jsonFilePath, bool haveComment) {
 		if(haveComment) {
 			return QSharedPointer<Json>::create(readJsonFileWithRemoveComment(jsonFilePath), false);
 		}
 		return QSharedPointer<Json>::create(jsonFilePath, true);
 	}
 
+	Json* createJsonPtr(const QString& jsonFilePath, bool haveComment) {
+		if (haveComment) {
+			return new Json(readJsonFileWithRemoveComment(jsonFilePath), false);
+		}
+		return new Json(jsonFilePath, true);
+	}
+
+
+	QJsonValue getJsonValue(const QString& jsonFilePath, const QString& keyPath) {
+		auto&& ptr = createJsonPtr(jsonFilePath, true);
+		return ptr->getJsonValue(keyPath);
+	}
+
+
+	void sortJsonArray(QJsonArray& array, std::function<bool(const QJsonValue&, const QJsonValue&)> greaterFn) {
+		for(int i = 0; i < array.size() - 1; i++) {
+			for(int j = 0; j < array.size() - i - 1; j++) {
+				if(!greaterFn(array[j],array[j+1])) {
+					QJsonValue tmp = array[j];
+					array.replace(j, array[j + 1]);
+					array.replace(j + 1, tmp);
+				}
+			}
+		}
+	}
 }
 

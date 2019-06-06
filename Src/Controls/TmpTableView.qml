@@ -66,10 +66,6 @@ Item {
 
     signal columnVisibleChanged(int columnIndex,bool columnVisible)
 
-    onColumnVisibleChanged: {
-        print(columnIndex,columnVisible)
-    }
-
     function switchSelect(row) {
         var idx = selectedRows.indexOf(row)
         if(idx < 0) {
@@ -127,6 +123,15 @@ Item {
         }
     }
 
+    property int dragedIndex: -1
+    property int dragedMoveX: 0
+
+    onHeaderModelChanged: {
+//        tableView.columnWidthProvider = Qt.binding(function columnWidth(column) {
+//            print(headerModel,headerModel.headerItems,headerModel.headerItems[column])
+//            return headerModel.headerItems[column].visible ? headerModel.headerItems[column].itemWidth : 1;
+//        })
+    }
 
     ListView {
         id: headerListView
@@ -136,48 +141,97 @@ Item {
         contentX: tableView.contentX
         interactive: false
         clip: true
-        delegate: Loader {
-            id: headerItemLoader
-            //define properties which can be accessed by loader.item
-            property var itemData: modelData
-            property var itemColumn: index
-            clip: true
-
+        delegate: Item {
+            id: headerItemDelegate
             width: modelData.visible ? modelData.itemWidth : 1
             height: titleBarHeight
-
-            Connections {
-                target: modelData
-                onVisible: columnVisibleChanged(index,visible)
-            }
-
-            sourceComponent: headerItemComponentSelector(index,modelData)
-
-            Item {
-                width: rw(5)
+            z: dragArea.drag.active ? Infinity : 1
+            //define properties which can be accessed by loader.item
+            Loader {
+                id: headerItemLoader
+                property var itemData: modelData
+                property int itemColumn: index
+                property bool dragged: dragArea.drag.active
+                clip: true
+                width: parent.width
                 height: parent.height
-                anchors {
-                    right: parent.right
-                }
-                //rise and make headerItemMouseArea handle first
-                z: headerItemLoader.item.z + 1
-                MovableArea {
-                    id: headerItemMouseArea
-                    enabled: modelData.visible
-                    anchors.fill: parent
-                    hoverEnable: true
-                    cursorShape: Qt.SizeHorCursor
-                    onPositionChanged: {
-                        if(modelData.itemWidth <= modelData.minWidth && deltaX < 0) {
-                            return;
-                        }
-                        modelData.itemWidth += deltaX;
-                        headerModel.headerWidth += deltaX
-                        tableView.forceLayout()
+                onXChanged: {
+                    //print("x",x)
+                    var outerObject = headerItemDelegate
+                    var innerObject = headerItemLoader
+                    if(dragedIndex != index || innerObject.x > outerObject.width) {
+                        return
                     }
-                    onDoubleClicked: {
-                        headerModel.setItemWidthAt(index,tableModel.resizeToContents(index,itemFont))
-                        tableView.forceLayout()
+                    var toRight = innerObject.x - dragedMoveX > 0
+                    var toLeft = !toRight
+                    var toIndex = toRight ? index + 1 : index - 1
+                    var fromIndex = index
+                    if(fromIndex === toIndex || toIndex < 0 || toIndex >= control.count) {
+                        return;
+                    }
+                    //当按着不放连续移动时，需减去模型数据移动时的位置（width/2)
+                    var thresold = innerObject.width / 2
+                    var toThresold = Math.abs(innerObject.x) > thresold
+                    if(!toThresold) {
+                        return
+                    }
+                    headerModel.move(fromIndex,toIndex)
+                    dragedIndex = toIndex
+                    if(toRight) {
+                        dragedMoveX = innerObject.x - outerObject.width
+                    } else {
+                        dragedMoveX = innerObject.width + innerObject.x
+                    }
+                }
+
+                Connections {
+                    target: modelData
+                    onVisible: columnVisibleChanged(index,visible)
+                }
+
+                sourceComponent: headerItemComponentSelector(index,modelData)
+
+                MouseArea {
+                    id: dragArea
+                    anchors.fill: parent
+                    drag.target: headerItemLoader
+                    drag.axis: Drag.XAxis
+
+                    onReleased: {
+                        headerItemLoader.x = 0
+                        dragedMoveX = 0
+                    }
+                    onPressed: {
+                        dragedIndex = index
+                    }
+                }
+
+                Item {
+                    width: rw(5)
+                    height: parent.height
+                    anchors {
+                        right: parent.right
+                    }
+                    //rise and make headerItemMouseArea handle first
+                    z: headerItemLoader.item.z + 1
+                    MovableArea {
+                        id: headerItemMouseArea
+                        enabled: modelData.visible
+                        anchors.fill: parent
+                        hoverEnable: true
+                        cursorShape: Qt.SizeHorCursor
+                        onPositionChanged: {
+                            if(modelData.itemWidth <= modelData.minWidth && deltaX < 0) {
+                                return;
+                            }
+                            modelData.itemWidth += deltaX;
+                            headerModel.headerWidth += deltaX
+                            tableView.forceLayout()
+                        }
+                        onDoubleClicked: {
+                            headerModel.setItemWidthAt(index,tableModel.resizeToContents(index,itemFont))
+                            tableView.forceLayout()
+                        }
                     }
                 }
             }
@@ -192,10 +246,10 @@ Item {
         rowHeightProvider: function () {
             return rowHeight
         }
-
         columnWidthProvider: function columnWidth(column) {
             return headerModel.headerItems[column].visible ? headerModel.headerItems[column].itemWidth : 1;
         }
+
         contentWidth: headerModel.headerWidth
         flickableDirection: TableView.VerticalFlick
         clip: true
@@ -229,6 +283,7 @@ Item {
 
         delegate: Loader {
             id: tableItemLoader
+
             property var itemData: modelData
             property var itemRow: row
             property var itemColumn: column
@@ -241,16 +296,16 @@ Item {
                 }
             }
 
-//            Connections {
-//                target: control
-//                onColumnVisibleChanged: {
-//                    if(columnIndex == column) {
-//                        tableItemLoader.width = Qt.binding(function(){
-//                            return columnVisible ?
-//                        })
-//                    }
-//                }
-//            }
+            //            Connections {
+            //                target: control
+            //                onColumnVisibleChanged: {
+            //                    if(columnIndex == column) {
+            //                        tableItemLoader.width = Qt.binding(function(){
+            //                            return columnVisible ?
+            //                        })
+            //                    }
+            //                }
+            //            }
 
             MouseArea {
                 id: _tableItemMouseArea

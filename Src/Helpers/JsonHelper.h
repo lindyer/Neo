@@ -33,6 +33,17 @@ namespace neo {
 	 * \param haveComment 是否包含注释
 	 * \return Json共享指针对象
 	 */
-	QSharedPointer<Json> createJsonPtr(const QString& jsonFilePath,bool haveComment = true);
+	QSharedPointer<Json> createJsonSharedPtr(const QString& jsonFilePath,bool haveComment = true);
+
+	Json* createJsonPtr(const QString& jsonFilePath, bool haveComment = true);
+	/**
+	 * \brief 获取Json键值
+	 * \param jsonFilePath json文件路径
+	 * \param keyPath 键路径 
+	 * \return 
+	 */
+	QJsonValue getJsonValue(const QString &jsonFilePath,const QString &keyPath);
+
+	void sortJsonArray(QJsonArray& array,std::function<bool(const QJsonValue &,const QJsonValue &)> greaterFn);
 
 }
