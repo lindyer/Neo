@@ -18,6 +18,8 @@
 
 using namespace neo;
 
+//Q_COREAPP_STARTUP_FUNCTION(registerMyQmlTypes)
+
 int main(int argc, char *argv[])
 {
 	App::run(argc, argv, [](AppType &app,QQmlApplicationEngine &engine)-> bool {
