@@ -11,10 +11,11 @@
 
 
 #include <QQuickItem>
+#include "Common/Global.h"
 
 namespace neo {
 
-namespace Quick {
+namespace quick {
 
 class MovableAreaPrivate;
 
@@ -26,6 +27,8 @@ class MovableArea : public QQuickItem
 	Q_PROPERTY(bool hoverEnable READ hoverEnable WRITE setHoverEnable NOTIFY hoverEnableChanged)
     Q_PROPERTY(int cursorShape READ cursorShape WRITE setCursorShape NOTIFY cursorShapeChanged)
 	Q_PROPERTY(bool pressed READ pressed WRITE setPressed NOTIFY pressedChanged)
+
+	NEO_QML_TYPE_REGISTER_DECLARE(MovableArea)
 public:
     MovableArea(QQuickItem* parent = nullptr);
     ~MovableArea() override;

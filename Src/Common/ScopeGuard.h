@@ -7,6 +7,7 @@
  */
 
 #include "Common/Noncopyable.h"
+#include "Global.h"
 
 #include <functional>
 
@@ -32,8 +33,6 @@ private:
 	bool dismiss_ = false;
 };
 
-#define SCOPEGUARD_LINENAME_CAT(name, line) name##line
-#define SCOPEGUARD_LINENAME(name, line) SCOPEGUARD_LINENAME_CAT(name, line)
-#define ON_SCOPE_EXIT(callback) Neo::ScopeGuard SCOPEGUARD_LINENAME(EXIT, __LINE__)(callback)
+#define ON_SCOPE_EXIT(callback) neo::ScopeGuard NEO_NAME_LINE_CAT(scopeGuard, __LINE__)(callback);
 }
 

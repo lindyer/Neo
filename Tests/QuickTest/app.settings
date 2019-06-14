@@ -1,4 +1,8 @@
 {
+    "mainwindow": {
+        "pos": "default",
+        "size": "default"
+    },
     "tables": {
         "tableName": {
             "header": {
@@ -20,25 +24,25 @@
                         "index": 0,
                         "sortable": false,
                         "title": "序号",
-                        "width": 101
+                        "width": 117
                     },
                     {
                         "field": "Date",
                         "index": 1,
                         "title": "日期",
-                        "width": 231
+                        "width": 125
                     },
                     {
                         "field": "StockCode",
                         "index": 2,
                         "title": "股票代码",
-                        "width": 139
+                        "width": 169
                     },
                     {
                         "field": "StockName",
                         "index": 3,
                         "title": "股票名称",
-                        "width": 131
+                        "width": 212
                     }
                 ]
             }

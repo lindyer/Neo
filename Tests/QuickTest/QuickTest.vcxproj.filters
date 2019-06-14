@@ -46,9 +46,6 @@
     <Filter Include="Neo\3rd\utilities">
       <UniqueIdentifier>{31a33166-799d-4642-861b-c95467e772e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Neo\Helpers">
-      <UniqueIdentifier>{d0a17231-7904-462f-8ca3-fce7ec3413eb}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,20 +66,11 @@
     <ClCompile Include="..\..\Src\Common\LogHandler.cpp">
       <Filter>Neo\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Models\NeoAbstractTableModel.cpp">
-      <Filter>Neo\Models</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Gui\NeoDoubleValidator.cpp">
       <Filter>Neo\Gui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Models\NeoModelHelper.cpp">
-      <Filter>Neo\Models</Filter>
-    </ClCompile>
     <ClCompile Include="TableModelTest.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Models\NeoTableHeaderItem.cpp">
-      <Filter>Neo\Models</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\3rd\utilities\HttpClient.cpp">
       <Filter>Neo\3rd\utilities</Filter>
@@ -90,29 +78,47 @@
     <ClCompile Include="..\..\Src\3rd\utilities\Json.cpp">
       <Filter>Neo\3rd\utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Helpers\JsonHelper.cpp">
-      <Filter>Neo\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Models\NeoTableHeaderModel.cpp">
-      <Filter>Neo\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Helpers\NetHelper.cpp">
-      <Filter>Neo\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Common\LazyActor.cpp">
       <Filter>Neo\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Common\LogReporter.cpp">
       <Filter>Neo\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Helpers\LogHelper.cpp">
-      <Filter>Neo\Helpers</Filter>
+    <ClCompile Include="..\..\Src\Network\NetHelper.cpp">
+      <Filter>Neo\Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Helpers\FileHelper.cpp">
-      <Filter>Neo\Helpers</Filter>
+    <ClCompile Include="..\..\Src\Common\FileHelper.cpp">
+      <Filter>Neo\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Models\NeoTableHeaderItem_p.cpp">
+    <ClCompile Include="..\..\Src\Common\JsonHelper.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\LogHelper.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Quick\Cursor.cpp">
+      <Filter>Neo\Quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Models\AbstractTableModel.cpp">
       <Filter>Neo\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Models\TableHeaderModel.cpp">
+      <Filter>Neo\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Models\TableHeaderItem.cpp">
+      <Filter>Neo\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Models\ModelHelper.cpp">
+      <Filter>Neo\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Models\TableHeaderItem_p.cpp">
+      <Filter>Neo\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\Global.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\App.cpp">
+      <Filter>Neo\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,20 +148,11 @@
     <QtMoc Include="..\..\Src\Network\Ping_p.h">
       <Filter>Neo\Network</Filter>
     </QtMoc>
-    <QtMoc Include="..\..\Src\Models\NeoAbstractTableModel.h">
-      <Filter>Neo\Models</Filter>
-    </QtMoc>
     <QtMoc Include="..\..\Src\Gui\NeoDoubleValidator.h">
       <Filter>Neo\Gui</Filter>
     </QtMoc>
     <QtMoc Include="TableModelTest.h">
       <Filter>Source Files</Filter>
-    </QtMoc>
-    <QtMoc Include="..\..\Src\Models\NeoTableHeaderItem.h">
-      <Filter>Neo\Models</Filter>
-    </QtMoc>
-    <QtMoc Include="..\..\Src\Models\NeoTableHeaderModel.h">
-      <Filter>Neo\Models</Filter>
     </QtMoc>
     <QtMoc Include="..\..\Src\Common\LazyActor.h">
       <Filter>Neo\Common</Filter>
@@ -166,37 +163,60 @@
     <QtMoc Include="..\..\Src\3rd\utilities\Json.h">
       <Filter>Neo\3rd\utilities</Filter>
     </QtMoc>
+    <QtMoc Include="..\..\Src\Network\NetHelper.h">
+      <Filter>Neo\Network</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Quick\Cursor.h">
+      <Filter>Neo\Quick</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Models\AbstractTableModel.h">
+      <Filter>Neo\Models</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Models\TableHeaderModel.h">
+      <Filter>Neo\Models</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Models\TableHeaderItem.h">
+      <Filter>Neo\Models</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\Models\NeoModelHelper.h">
-      <Filter>Neo\Models</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Common\Noncopyable.h">
       <Filter>Neo\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\3rd\utilities\HttpClient.h">
       <Filter>Neo\3rd\utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Helpers\JsonHelper.h">
-      <Filter>Neo\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Common\ScopeGuard.h">
       <Filter>Neo\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Helpers\NetHelper.h">
-      <Filter>Neo\Helpers</Filter>
+    <ClInclude Include="..\..\Src\Common\FileHelper.h">
+      <Filter>Neo\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Helpers\LogHelper.h">
-      <Filter>Neo\Helpers</Filter>
+    <ClInclude Include="..\..\Src\Common\JsonHelper.h">
+      <Filter>Neo\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Helpers\FileHelper.h">
-      <Filter>Neo\Helpers</Filter>
+    <ClInclude Include="..\..\Src\Common\LogHelper.h">
+      <Filter>Neo\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Helpers\Helpers.h">
-      <Filter>Neo\Helpers</Filter>
+    <ClInclude Include="..\..\Src\Quick\Quick.h">
+      <Filter>Neo\Quick</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Models\NeoTableHeaderItem_p.h">
+    <ClInclude Include="..\..\Src\Models\ModelHelper.h">
       <Filter>Neo\Models</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Models\TableHeaderItem_p.h">
+      <Filter>Neo\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Common\Global.h">
+      <Filter>Neo\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Common\App.h">
+      <Filter>Neo\Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Src\Network\Network">
+      <Filter>Neo\Network</Filter>
+    </None>
   </ItemGroup>
 </Project>

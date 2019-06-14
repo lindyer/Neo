@@ -12,7 +12,6 @@
 
 namespace neo {
 
-namespace Gui {
 
 class NeoDoubleValidator : public QDoubleValidator {
     Q_OBJECT
@@ -23,8 +22,6 @@ public:
 
     QValidator::State validate(QString& s, int& pos) const override;
 };
-
-}
 
 }
 

@@ -65,7 +65,7 @@ Item {
             property int index
             checkable: true
             onToggled: {
-                neoTableHeaderModel.setItemVisibleAt(index,checked)
+                tableView.headerModel.setItemVisibleAt(text,checked)
                 tableView.tableView.forceLayout()
             }
         }
@@ -74,6 +74,15 @@ Item {
     NeoMenu {
         id: headerMenu
         title: "显示的列"
+        onVisibleChanged: {
+            if(visible && headerMenu.count === 0) {
+                for(var index in tableView.headerModel.headerItems) {
+                    var item = tableView.headerModel.headerItems[index]
+                    var action = headerItemActionComponent.createObject(headerMenu,{index:index,text:item.title,checked:item.visible})
+                    headerMenu.addAction(action)
+                }
+            }
+        }
     }
 
     MouseArea {
@@ -105,7 +114,6 @@ Item {
         Component.onCompleted: {
 
         }
-        headerModel: tableHeaderModel
 //        headerModel: NeoTableHeaderModel {
 //            id: neoTableHeaderModel
 //            jsonFilePath: "app.settings"
@@ -124,5 +132,8 @@ Item {
         }*/
         anchors.fill: parent
         anchors.margins: 20
+        onRowDoubleClicked:  {
+            tableModelTest.refresh()
+        }
     }
 }

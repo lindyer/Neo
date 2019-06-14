@@ -16,6 +16,23 @@ NeoAppWindow {
         anchors.fill: parent
     }
 
+//    Timer {
+//        repeat: true
+//        interval: 2000
+//        running: true
+//        onTriggered: {
+//            print(Cursor.pos())
+//        }
+//    }
+
+//    TextEdit {
+//        anchors.fill: parent
+//        focus: true
+//        Component.onCompleted: {
+//            forceActiveFocus()
+//        }
+//    }
+
 //    NeoFontHolder {
 //        text: "I am font holder"
 //        anchors.centerIn: parent

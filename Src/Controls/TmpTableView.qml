@@ -9,6 +9,7 @@ Item {
 
     default property alias tableViewChildren: tableView.children
 
+    //headerModel: tableModelTest.
     //export alias property
     property alias headerModel: headerListView.model // it need two field: Title and Width
     property alias tableModel: tableView.model
@@ -81,7 +82,7 @@ Item {
             id: headerItemDelegate
             property var holder: parent
             border { width: 1; color: "#D0D0D0" }
-            color: "#F0F0F0"
+            color: holder.dragged ? "#7787CEFA" : "#F0F0F0"
             Text {
                 text: holder.itemData.title
                 width: parent.width
@@ -126,13 +127,6 @@ Item {
     property int dragedIndex: -1
     property int dragedMoveX: 0
 
-    onHeaderModelChanged: {
-//        tableView.columnWidthProvider = Qt.binding(function columnWidth(column) {
-//            print(headerModel,headerModel.headerItems,headerModel.headerItems[column])
-//            return headerModel.headerItems[column].visible ? headerModel.headerItems[column].itemWidth : 1;
-//        })
-    }
-
     ListView {
         id: headerListView
         width: parent.width
@@ -141,6 +135,7 @@ Item {
         contentX: tableView.contentX
         interactive: false
         clip: true
+        model: tableModel.headerModel()
         delegate: Item {
             id: headerItemDelegate
             width: modelData.visible ? modelData.itemWidth : 1
@@ -175,22 +170,19 @@ Item {
                     if(!toThresold) {
                         return
                     }
-                    headerModel.move(fromIndex,toIndex)
+                    tableModel.move(fromIndex,toIndex)
                     dragedIndex = toIndex
                     if(toRight) {
                         dragedMoveX = innerObject.x - outerObject.width
                     } else {
                         dragedMoveX = innerObject.width + innerObject.x
                     }
-                }
-
-                Connections {
-                    target: modelData
-                    onVisible: columnVisibleChanged(index,visible)
+                    tableView.forceLayout()
                 }
 
                 sourceComponent: headerItemComponentSelector(index,modelData)
 
+                Drag.dragType: Drag.Internal
                 MouseArea {
                     id: dragArea
                     anchors.fill: parent
@@ -224,7 +216,7 @@ Item {
                             if(modelData.itemWidth <= modelData.minWidth && deltaX < 0) {
                                 return;
                             }
-                            modelData.itemWidth += deltaX;
+                            modelData.itemWidth += deltaX
                             headerModel.headerWidth += deltaX
                             tableView.forceLayout()
                         }
@@ -295,17 +287,6 @@ Item {
                     return currentSelectRow === row
                 }
             }
-
-            //            Connections {
-            //                target: control
-            //                onColumnVisibleChanged: {
-            //                    if(columnIndex == column) {
-            //                        tableItemLoader.width = Qt.binding(function(){
-            //                            return columnVisible ?
-            //                        })
-            //                    }
-            //                }
-            //            }
 
             MouseArea {
                 id: _tableItemMouseArea

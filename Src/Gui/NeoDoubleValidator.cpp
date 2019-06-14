@@ -3,8 +3,6 @@
 
 namespace neo {
 
-namespace Gui {
-
 NeoDoubleValidator::NeoDoubleValidator(QObject *parent)
     : QDoubleValidator(parent) {
 }
@@ -54,7 +52,5 @@ QValidator::State NeoDoubleValidator::validate(QString& s, int& pos) const {
     }
     return QValidator::Invalid;
 }
-
-} // Gui
 
 } // Neo

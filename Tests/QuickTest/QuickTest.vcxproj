@@ -65,6 +65,9 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">QuickTest</TargetName>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <SourcePath>$(QTDIR)\..\Src\;$(SourcePath)</SourcePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;release;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -163,21 +166,23 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\3rd\utilities\HttpClient.cpp" />
     <ClCompile Include="..\..\Src\3rd\utilities\Json.cpp" />
+    <ClCompile Include="..\..\Src\Common\App.cpp" />
     <ClCompile Include="..\..\Src\Common\Common.cpp" />
+    <ClCompile Include="..\..\Src\Common\FileHelper.cpp" />
+    <ClCompile Include="..\..\Src\Common\Global.cpp" />
+    <ClCompile Include="..\..\Src\Common\JsonHelper.cpp" />
     <ClCompile Include="..\..\Src\Common\LazyActor.cpp" />
     <ClCompile Include="..\..\Src\Common\LogHandler.cpp" />
+    <ClCompile Include="..\..\Src\Common\LogHelper.cpp" />
     <ClCompile Include="..\..\Src\Common\LogReporter.cpp" />
     <ClCompile Include="..\..\Src\Common\Numeric.cpp" />
     <ClCompile Include="..\..\Src\Gui\NeoDoubleValidator.cpp" />
-    <ClCompile Include="..\..\Src\Helpers\FileHelper.cpp" />
-    <ClCompile Include="..\..\Src\Helpers\JsonHelper.cpp" />
-    <ClCompile Include="..\..\Src\Helpers\LogHelper.cpp" />
-    <ClCompile Include="..\..\Src\Helpers\NetHelper.cpp" />
-    <ClCompile Include="..\..\Src\Models\NeoAbstractTableModel.cpp" />
-    <ClCompile Include="..\..\Src\Models\NeoModelHelper.cpp" />
-    <ClCompile Include="..\..\Src\Models\NeoTableHeaderItem.cpp" />
-    <ClCompile Include="..\..\Src\Models\NeoTableHeaderItem_p.cpp" />
-    <ClCompile Include="..\..\Src\Models\NeoTableHeaderModel.cpp" />
+    <ClCompile Include="..\..\Src\Models\AbstractTableModel.cpp" />
+    <ClCompile Include="..\..\Src\Models\ModelHelper.cpp" />
+    <ClCompile Include="..\..\Src\Models\TableHeaderItem.cpp" />
+    <ClCompile Include="..\..\Src\Models\TableHeaderItem_p.cpp" />
+    <ClCompile Include="..\..\Src\Models\TableHeaderModel.cpp" />
+    <ClCompile Include="..\..\Src\Network\NetHelper.cpp" />
     <ClCompile Include="..\..\Src\Network\Ping.cpp">
       <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\%(Filename).moc</OutputFile>
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
@@ -188,6 +193,7 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtCore;.\release;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;$(QTDIR)\include\QtWidgets</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DEPRECATED_WARNINGS;QT_NO_DEBUG;QT_QUICK_LIB;QT_GUI_LIB;QT_QML_LIB;QT_NETWORK_LIB;QT_CORE_LIB;NDEBUG;QT_WIDGETS_LIB</Define>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Quick\Cursor.cpp" />
     <ClCompile Include="..\..\Src\Quick\MovableArea.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TableModelTest.cpp" />
@@ -232,11 +238,28 @@
     <QtMoc Include="..\..\Src\Network\Ping_p.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="..\..\Src\Models\NeoAbstractTableModel.h" />
+    <QtMoc Include="..\..\Src\Models\AbstractTableModel.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\debug;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\release;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\3rd\utilities\HttpClient.h" />
-    <ClInclude Include="..\..\Src\Models\NeoTableHeaderItem_p.h" />
+    <ClInclude Include="..\..\Src\Common\App.h" />
+    <ClInclude Include="..\..\Src\Common\FileHelper.h" />
+    <ClInclude Include="..\..\Src\Common\Global.h" />
+    <ClInclude Include="..\..\Src\Common\JsonHelper.h" />
+    <ClInclude Include="..\..\Src\Common\LogHelper.h" />
+    <ClInclude Include="..\..\Src\Models\TableHeaderItem_p.h" />
+    <ClInclude Include="..\..\Src\Quick\Quick.h" />
+    <QtMoc Include="..\..\Src\Network\NetHelper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\debug;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\release;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Quick\Cursor.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\debug;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\release;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+    </QtMoc>
     <QtMoc Include="..\..\Src\3rd\utilities\Json.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\debug;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\release;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
@@ -251,15 +274,19 @@
     </QtMoc>
     <ClInclude Include="..\..\Src\Common\Noncopyable.h" />
     <ClInclude Include="..\..\Src\Common\ScopeGuard.h" />
-    <ClInclude Include="..\..\Src\Helpers\FileHelper.h" />
-    <ClInclude Include="..\..\Src\Helpers\Helpers.h" />
-    <ClInclude Include="..\..\Src\Helpers\JsonHelper.h" />
-    <ClInclude Include="..\..\Src\Helpers\LogHelper.h" />
-    <ClInclude Include="..\..\Src\Helpers\NetHelper.h" />
-    <ClInclude Include="..\..\Src\Models\NeoModelHelper.h" />
-    <QtMoc Include="..\..\Src\Models\NeoTableHeaderModel.h" />
-    <QtMoc Include="..\..\Src\Models\NeoTableHeaderItem.h" />
+    <ClInclude Include="..\..\Src\Models\ModelHelper.h" />
+    <QtMoc Include="..\..\Src\Models\TableHeaderModel.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\debug;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\release;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+    </QtMoc>
+    <QtMoc Include="..\..\Src\Models\TableHeaderItem.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\debug;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\Src\3rd;$(SolutionDir)..\Src;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;.\release;C:\VulkanSDK\1.0.51.0\include;$(QTDIR)\mkspecs\win32-msvc;.\..\..\Src\Models;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQuickControls2;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork</IncludePath>
+    </QtMoc>
     <QtMoc Include="TableModelTest.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Src\Network\Network" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

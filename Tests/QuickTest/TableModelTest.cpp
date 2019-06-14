@@ -1,37 +1,37 @@
 ﻿#include "TableModelTest.h"
+#include "TableHeaderModel.h"
 #include <QDebug>
 
+NEO_QML_TYPE_REGISTER_DEFINE("Neo.Tests",TableModelTest)
+//neo::QmlTypeRegister<TableModelTest> TableModelTest::_("Neo.Tests","TableModelTest");
 
 QVariant TableModelTest::data(const QModelIndex& index, int role) const {
 	int row = index.row();
 	int col = index.column();
-	if(col == 0) {
-		return "你好啊，Table";
-	} else if(col == 1) {
-		return "Goods,Friends";
+	const auto headerItem = headerModel()->visibleHeaderItemAt(col);
+	if(!headerItem) {
+		return QVariant("");
 	}
-	return "AAAN";
+	return fieldProvider(headerItem->field());
 }
 
 
-//QQmlListProperty<NeoTableHeaderItem> TableModelTest::headerList() {
-//	appendHeaderItem(new NeoTableHeaderItem("L1",100,14));
-//	appendHeaderItem(new NeoTableHeaderItem("L2", 200, 14));
-//	appendHeaderItem(new NeoTableHeaderItem("L3", 150, 14));
-//	appendHeaderItem(new NeoTableHeaderItem("L4", 50, 14));
-//
-//}
-
-
-TableModelTest::TableModelTest(QObject* parent) {
+TableModelTest::TableModelTest(const QString& jsonFilePath, const QString& keyPath,QObject* parent): AbstractTableModel(jsonFilePath,keyPath,parent) {
 
 }
 
 int TableModelTest::rowCount(const QModelIndex& parent) const {
-	return 10;
+	return 1;
 }
 
 
-//int TableModelTest::columnCount(const QModelIndex& parent) const {
-//	return  ColumnCount;
-//}
+QVariant TableModelTest::fieldProvider(const QString& field) const {
+	if(field == "Date") {
+		return "Date";
+	} else if(field == "StockCode") {
+		return "StockCode";
+	} else if(field == "StockName") {
+		return "StockName";
+	}
+	return QVariant("undefined");
+}
