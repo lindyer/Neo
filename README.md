@@ -1,9 +1,8 @@
-##About Neo 
-
+## About Neo 
 > Neo is a lib which aim to make more convenient and powful to develop new Qt's Applications.
 
 
-##Requirement
+## Requirement
 * C++11 & C++14
 * [Qt5.12](http://download.qt.io/archive/qt/5.12/)
 
