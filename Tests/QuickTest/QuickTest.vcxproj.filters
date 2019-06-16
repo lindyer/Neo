@@ -120,6 +120,12 @@
     <ClCompile Include="..\..\Src\Common\App.cpp">
       <Filter>Neo\Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Common\ConvertHelper.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\PrintHelper.cpp">
+      <Filter>Neo\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -211,6 +217,12 @@
       <Filter>Neo\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Common\App.h">
+      <Filter>Neo\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Common\ConvertHelper.h">
+      <Filter>Neo\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Common\PrintHelper.h">
       <Filter>Neo\Common</Filter>
     </ClInclude>
   </ItemGroup>

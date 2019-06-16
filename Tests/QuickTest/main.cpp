@@ -16,6 +16,7 @@
 #include "Common/FileHelper.h"
 #include "Common/App.h"
 
+#include "Common/PrintHelper.h"
 using namespace neo;
 
 //Q_COREAPP_STARTUP_FUNCTION(registerMyQmlTypes)
