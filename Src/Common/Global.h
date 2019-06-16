@@ -52,12 +52,17 @@ namespace neo {
 #define NEO_QML_QUICK_REGISTER(Type) static int NEO_QML_TYPE_ID = qmlRegisterType<Type>("Neo.Quick",1,0,#Type);
 #define NEO_QML_MODEL_REGISTER(Type) static int NEO_QML_TYPE_ID = qmlRegisterType<Type>("Neo.Model",1,0,#Type);
 
-//for header file declare
+/*
+ * Note: if you want to import your classes to QML,under macros you will need for easy use. 
+ * You must call neo::registerQmlTypeList() method,this method is called in App::run() automatic.
+ */
+
+//for header file declare,normal class
 #define NEO_QML_TYPE_REGISTER_DECLARE(Type) static neo::QmlTypeRegister<Type> _;
 //for cpp file define
 #define NEO_QML_TYPE_REGISTER_DEFINE(Uri,Type) neo::QmlTypeRegister<Type> Type::_{Uri,#Type};
 
-//for header file declare
+//for header file declare,singleton class
 #define NEO_QML_SINGLETON_TYPE_REGISTER_DECLARE(Type) static neo::QmlSingletonTypeRegister<Type> _;
 //for cpp file define
 #define NEO_QML_SINGLETON_TYPE_REGISTER_DEFINE(Uri,Type) neo::QmlSingletonTypeRegister<Type> Type::_{Uri,#Type};
